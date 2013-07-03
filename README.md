@@ -1,0 +1,2 @@
+domogik-plugin-diskfree
+=======================
