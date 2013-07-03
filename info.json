@@ -1,0 +1,159 @@
+{
+    "configuration": [
+        {
+            "default": false,
+            "description": "Automatically start plugin at Domogik startup", 
+            "id": "0", 
+            "key": "startup-plugin", 
+            "required": false,
+            "options": [], 
+            "type": "boolean"
+        }, 
+        {
+            "default": 5,
+            "description": "Interval between each poll (minute)", 
+            "id": "1", 
+            "key": "interval", 
+            "required": false,
+            "options": [], 
+            "type": "integer"
+        }
+    ], 
+    "commands": [],
+    "xpl_commands": [], 
+    "sensors": {
+    	"get_free_space": {
+		"name": "Free Space",
+                "data_type": "DT_Scaling",
+                "conversion": ""
+	},
+    	"get_used_space": {
+		"name": "Used Space",
+                "data_type": "DT_Scaling",
+                "conversion": ""
+	},
+    	"get_total_space": {
+		"name": "Total Space",
+                "data_type": "DT_Scaling",
+                "conversion": ""
+	},
+    	"get_percent_used": {
+		"name": "Percent used",
+                "data_type": "DT_Scaling",
+                "conversion": ""
+	}
+    },
+    "xpl_stats": {
+       "get_total_space": {
+            "name": "get_percent_used",
+            "schema": "sensor.basic",
+            "parameters": {
+                    "static": [
+			{
+				"key": "type",
+				"value": "percent_used"
+			}
+		    ],
+                    "device": [],
+                    "dynamic": [
+                        {
+                             "key": "current",
+                             "ignore_values": "",
+                             "sensor": "get_percent_used"
+                        }
+                    ]
+       	    }
+       },
+       "get_used_space": {
+            "name": "get_used_space",
+            "schema": "sensor.basic",
+            "parameters": {
+                    "static": [
+			{
+				"key": "type",
+				"value": "used_space"
+			}
+		    ],
+                    "device": [],
+                    "dynamic": [
+                        {
+                             "key": "current",
+                             "ignore_values": "",
+                             "sensor": "get_used_space"
+                        }
+                    ]
+       	    }
+       },
+       "get_total_space": {
+            "name": "get_total_space",
+            "schema": "sensor.basic",
+            "parameters": {
+                    "static": [
+			{
+				"key": "type",
+				"value": "total_space"
+			}
+		    ],
+                    "device": [],
+                    "dynamic": [
+                        {
+                             "key": "current",
+                             "ignore_values": "",
+                             "sensor": "get_total_space"
+                        }
+                    ]
+       	    }
+       },
+       "get_free_space": {
+            "name": "get_free_space",
+            "schema": "sensor.basic",
+            "parameters": {
+                    "static": [
+			{
+				"key": "type",
+				"value": "free_space"
+			}
+		    ],
+                    "device": [],
+                    "dynamic": [
+                        {
+                             "key": "current",
+                             "ignore_values": "",
+                             "sensor": "get_free_space"
+                        }
+                    ]
+       	    }
+       }
+    },
+    "device_types": {
+        "diskfree.disk_usage": {
+            "description": "Disk usage", 
+            "id": "diskfree.disk_usage", 
+            "name": "Disk usage",
+            "commands": [],
+            "sensors": ["get_total_space", "get_percent_used", "get_free_space", "get_used_space"],
+            "xpl_params": [
+                {
+                    "key": "device",
+                    "description": "The path to look at",
+                    "type": "string"
+                }
+            ]
+        }
+    }, 
+    "identity": {
+        "author": "Fritz", 
+        "author_email": "fritz.smh at gmail.com", 
+        "category": "computer", 
+        "changelog": "0.1\n- plugin creation", 
+        "dependencies": [], 
+        "description": "Send over xPL disk usage", 
+        "documentation": "http://wiki.domogik.org/plugin_diskfree", 
+        "domogik_min_version": "0.2.0", 
+        "name": "diskfree", 
+        "type": "plugin", 
+        "version": "0.1a0"
+    }, 
+    "json_version": 2,
+    "udev_rules": []
+}
