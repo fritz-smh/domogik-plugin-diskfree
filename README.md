@@ -1,4 +1,4 @@
-domogik-plugin-diskfree
+domogik-plugin-myplugin
 =======================
 
 This is a plugin for Domogik : http://www.domogik.org

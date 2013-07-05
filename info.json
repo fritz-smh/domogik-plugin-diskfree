@@ -2,18 +2,20 @@
     "configuration": [
         {
             "default": false,
-            "description": "Automatically start plugin at Domogik startup", 
-            "id": "0", 
-            "key": "startup-plugin", 
-            "required": false,
+            "description": "Automatically start the plugin at Domogik startup", 
+            "sort": "0", 
+            "key": "auto_startup",
+            "name" : "Start the plugin with Domogik",
+            "required": true,
             "options": [], 
             "type": "boolean"
         }, 
         {
             "default": 5,
             "description": "Interval between each poll (minute)", 
-            "id": "1", 
+            "sort": "1", 
             "key": "interval", 
+            "name": "Interval",
             "required": false,
             "options": [], 
             "type": "integer"
@@ -144,7 +146,7 @@
     "identity": {
         "author": "Fritz", 
         "author_email": "fritz.smh at gmail.com", 
-        "category": "computer", 
+        "tags": ["computer"], 
         "changelog": "0.1\n- plugin creation", 
         "dependencies": [], 
         "description": "Send over xPL disk usage", 
