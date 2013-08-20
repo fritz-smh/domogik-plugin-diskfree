@@ -46,7 +46,7 @@
 	}
     },
     "xpl_stats": {
-       "get_total_space": {
+       "get_percent_used": {
             "name": "get_percent_used",
             "schema": "sensor.basic",
             "parameters": {
@@ -137,8 +137,13 @@
             "xpl_params": [
                 {
                     "key": "device",
-                    "description": "The path to look at",
+                    "description": "The path to look at.",
                     "type": "string"
+                },
+                {
+                    "key": "interval",
+                    "description": "The time in minutes between each check.",
+                    "type": "number"
                 }
             ]
         }

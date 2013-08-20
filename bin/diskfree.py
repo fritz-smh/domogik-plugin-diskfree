@@ -27,7 +27,7 @@ Disk free
 Implements
 ==========
 
-- MirrorManager
+- DiskManager
 
 @author: Fritz <fritz.smh@gmail.com>
 @copyright: (C) 2007-2012 Domogik project
@@ -38,6 +38,9 @@ Implements
 from domogik.xpl.common.xplmessage import XplMessage
 from domogik.xpl.common.plugin import XplPlugin
 from domogik.xpl.common.queryconfig import Query
+from domogik.mq.reqrep.client import MQSyncReq
+from domogik.mq.message import MQMessage
+
 from packages.plugin_diskfree.lib.diskfree import Disk
 import threading
 import traceback
@@ -56,24 +59,24 @@ class DiskManager(XplPlugin):
         if not self.check_configured():
             return
 
-        print self.get_config("startup-plugin")
-        print self.get_config("interval")
-        print self.get_config("configured")
+        # get interval between each check
+        # TODO : configure this directly from the UI for each device
+        self.interval = self.get_config("interval")
 
-        # Global config : probe interval
-        #self._config = Query(self.myxpl, self.log)
-        #interval = self._config.query('diskfree', 'interval')
-        #if interval != None:
-        #    interval = float(interval)
-        #else:
-        #    msg = "Interval not configured. Exiting plugin"
-        #    self.log.info(msg)
-        #    print(msg)
-        #    self.force_leave()
-        #    return
+        # get the devices list
+        self.devices = self.get_device_list()
+        return
+
+        # TODO : pour chaque device ajouter un param : intervalle
+        #        creer une fonction dans la lib pour chaque fonctionnalité (get_total_space, ...)
+        #        pour chaque sensor de chaque device, recuperer adresse+interval et appeler via un timer la fonction qui va bien
+        #        envoyer le xpl correspondant
+          
+
+
 
         ## Configuration : list of path to check
-        self.path_list = {}
+        #self.path_list = {}
         #num = 1
         #loop = True
         #while loop == True:
