@@ -59,62 +59,85 @@ class DiskManager(XplPlugin):
         if not self.check_configured():
             return
 
-        # get interval between each check
-        # TODO : configure this directly from the UI for each device
-        self.interval = self.get_config("interval")
-
         # get the devices list
-        self.devices = self.get_device_list()
-        return
+        self.devices = self.get_device_list(quit_if_no_device = True)
+       
 
         # TODO : pour chaque device ajouter un param : intervalle
         #        creer une fonction dans la lib pour chaque fonctionnalité (get_total_space, ...)
         #        pour chaque sensor de chaque device, recuperer adresse+interval et appeler via un timer la fonction qui va bien
         #        envoyer le xpl correspondant
           
-
-
-
-        ## Configuration : list of path to check
-        #self.path_list = {}
-        #num = 1
-        #loop = True
-        #while loop == True:
-        #    path = self._config.query('diskfree', 'path-%s' % str(num))
-        #    if path != None:
-        #        self.log.info("Configuration : path=%s" % path)
-        #        num += 1
-        #        # init object list for path to None
-        #        self.path_list[path] = None
-        #    else:
-        #        loop = False
-
-        # no path configured
-        #if num == 1:
-        #    msg = "No path configured. Exiting plugin"
-        #    self.log.info(msg)
-        #    print(msg)
-        #    self.force_leave()
-        #    return
+        # for each device...
+        for a_device in self.devices:
+            # create a timer to call the appropriate function for each feature
+            path = self.get_parameter_for_feature(a_device, "xpl_stats", "get_percent_used", "device")
+            interval = self.get_parameter_for_feature(a_device, "xpl_stats", "get_percent_used", "interval")
+            #self.send_xpl(path, "percent_used", get_percent_used(path))
             
+
+        disk_manager = Disk(self.log, self.send_xpl, self.get_stop())
+
         ### Start listening each path
-        for path in self.path_list:
+        threads = {}
+        for a_device in self.devices:
             try:
-                self.path_list[path] = Disk(self.log, self.send_xpl, self.get_stop())
-                self.log.info("Start listening for '%s'" % path)
-                path_listen = threading.Thread(None,
-                                              self.path_list[path].listen,
-                                              "listen_diskfree",
+                # feature get_total_space
+                path = self.get_parameter_for_feature(a_device, "xpl_stats", "get_total_space", "device")
+                interval = self.get_parameter_for_feature(a_device, "xpl_stats", "get_total_space", "interval")
+                self.log.info("Start monitoring totel space for '%s'" % path)
+                thr_name = "{0}-{1}".format(a_device['name'], "get_total_space")
+                threads[thr_name] = threading.Thread(None,
+                                               disk_manager.get_total_space,
+                                              thr_name,
                                               (path, interval,),
                                               {})
-                path_listen.start()
+                threads[thr_name].start()
+
+                # feature get_free_space
+                path = self.get_parameter_for_feature(a_device, "xpl_stats", "get_free_space", "device")
+                interval = self.get_parameter_for_feature(a_device, "xpl_stats", "get_free_space", "interval")
+                self.log.info("Start monitoring free space for '%s'" % path)
+                thr_name = "{0}-{1}".format(a_device['name'], "get_free_space")
+                threads[thr_name] = threading.Thread(None,
+                                               disk_manager.get_free_space,
+                                              thr_name,
+                                              (path, interval,),
+                                              {})
+                threads[thr_name].start()
+
+                # feature get_used_space
+                path = self.get_parameter_for_feature(a_device, "xpl_stats", "get_used_space", "device")
+                interval = self.get_parameter_for_feature(a_device, "xpl_stats", "get_used_space", "interval")
+                self.log.info("Start monitoring used space for '%s'" % path)
+                thr_name = "{0}-{1}".format(a_device['name'], "get_used_space")
+                threads[thr_name] = threading.Thread(None,
+                                               disk_manager.get_used_space,
+                                              thr_name,
+                                              (path, interval,),
+                                              {})
+                threads[thr_name].start()
+
+                # feature get_percent_used
+                path = self.get_parameter_for_feature(a_device, "xpl_stats", "get_percent_used", "device")
+                interval = self.get_parameter_for_feature(a_device, "xpl_stats", "get_percent_used", "interval")
+                self.log.info("Start monitoring percent used for '%s'" % path)
+                thr_name = "{0}-{1}".format(a_device['name'], "get_percent_used")
+                threads[thr_name] = threading.Thread(None,
+                                               disk_manager.get_percent_used,
+                                              thr_name,
+                                              (path, interval,),
+                                              {})
+                threads[thr_name].start()
+
             except:
                 self.log.error(traceback.format_exc())
-                print(traceback.format_exc())
                 # we don't quit plugin if an error occured
                 # a disk can have been unmounted for a while
                 #self.force_leave()
                 #return
+
+
 
         self.ready()
         self.log.info("Plugin ready :)")
@@ -123,7 +146,7 @@ class DiskManager(XplPlugin):
     def send_xpl(self, path, du_type, du_value):
         """ Send xPL message on network
         """
-        print("path:%s, %s:%s" % (path, du_type, du_value))
+        self.log.debug("Values for {0} on {1} : {2}".format(du_type, path, du_value))
         msg = XplMessage()
         msg.set_type("xpl-stat")
         msg.set_schema("sensor.basic")

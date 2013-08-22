@@ -36,7 +36,81 @@ Implements
 
 import os
 
+
+
 class Disk:
+    """ Disk usage 
+    """
+
+    def __init__(self, log, callback, stop):
+        """ Init Disk object
+            @param log : log instance
+            @param callback : callback
+        """
+        self._log = log
+        self._callback = callback
+        self._stop = stop
+
+    def get_total_space(self, path, interval):
+        """ Get total space on a path
+        """
+        while not self._stop.isSet():
+            try:
+                du = os.statvfs(path)
+                du_total = (du.f_blocks * du.f_frsize) / 1024
+                self._callback(path, "total_space", du_total)
+            except:
+                self.log.error("Error for getting total space on path {0} : {1}".format(path, traceback.format_exc()))
+            self._stop.wait(interval*60)
+    
+    
+    def get_free_space(self, path, interval):
+        """ Get free space on a path
+        """
+        while not self._stop.isSet():
+            try:
+                du = os.statvfs(path)
+                du_free = (du.f_bavail * du.f_frsize) / 1024
+                self._callback(path, "free_space", du_free)
+            except:
+                self.log.error("Error for getting free space on path {0} : {1}".format(path, traceback.format_exc()))
+            self._stop.wait(interval*60)
+    
+    
+    def get_used_space(self, path, interval):
+        """ Get used space on a path
+        """
+        while not self._stop.isSet():
+            try:
+                du = os.statvfs(path)
+                du_used = ((du.f_blocks - du.f_bfree) * du.f_frsize) / 1024
+                self._callback(path, "used_space", du_used)
+            except:
+                self.log.error("Error for getting used space on path {0} : {1}".format(path, traceback.format_exc()))
+            self._stop.wait(interval*60)
+    
+    
+    def get_percent_used(self, path, interval):
+        """ Get space used in % on a path
+        """
+        while not self._stop.isSet():
+            try:
+                du = os.statvfs(path)
+                du_total = (du.f_blocks * du.f_frsize) / 1024
+                du_used = ((du.f_blocks - du.f_bfree) * du.f_frsize) / 1024
+                # notice : % value is less than real value (df command) because of reserved blocks
+                try:
+                    du_percent = (du_used * 100) / du_total
+                except ZeroDivisionError:
+                    du_percent = 0
+                self._callback(path, "percent_used", du_percent)
+            except:
+                self.log.error("Error for getting percent used on path {0} : {1}".format(path, traceback.format_exc()))
+            self._stop.wait(interval*60)
+
+
+
+class off_Disk:
     """ Disk usage 
     """
 
