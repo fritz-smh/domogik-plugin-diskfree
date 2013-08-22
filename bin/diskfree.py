@@ -63,19 +63,6 @@ class DiskManager(XplPlugin):
         self.devices = self.get_device_list(quit_if_no_device = True)
        
 
-        # TODO : pour chaque device ajouter un param : intervalle
-        #        creer une fonction dans la lib pour chaque fonctionnalité (get_total_space, ...)
-        #        pour chaque sensor de chaque device, recuperer adresse+interval et appeler via un timer la fonction qui va bien
-        #        envoyer le xpl correspondant
-          
-        # for each device...
-        for a_device in self.devices:
-            # create a timer to call the appropriate function for each feature
-            path = self.get_parameter_for_feature(a_device, "xpl_stats", "get_percent_used", "device")
-            interval = self.get_parameter_for_feature(a_device, "xpl_stats", "get_percent_used", "interval")
-            #self.send_xpl(path, "percent_used", get_percent_used(path))
-            
-
         disk_manager = Disk(self.log, self.send_xpl, self.get_stop())
 
         ### Start listening each path
