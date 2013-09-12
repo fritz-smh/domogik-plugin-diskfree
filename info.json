@@ -9,16 +9,6 @@
             "required": true,
             "options": [], 
             "type": "boolean"
-        }, 
-        {
-            "default": 5,
-            "description": "Interval between each poll (minute)", 
-            "sort": "1", 
-            "key": "interval", 
-            "name": "Interval",
-            "required": false,
-            "options": [], 
-            "type": "integer"
         }
     ], 
     "commands": [],
