@@ -16,17 +16,17 @@
     "sensors": {
     	"get_free_space": {
 		"name": "Free Space",
-                "data_type": "DT_Scaling",
+                "data_type": "DT_Byte",
                 "conversion": ""
 	},
     	"get_used_space": {
 		"name": "Used Space",
-                "data_type": "DT_Scaling",
+                "data_type": "DT_Byte",
                 "conversion": ""
 	},
     	"get_total_space": {
 		"name": "Total Space",
-                "data_type": "DT_Scaling",
+                "data_type": "DT_Byte",
                 "conversion": ""
 	},
     	"get_percent_used": {
