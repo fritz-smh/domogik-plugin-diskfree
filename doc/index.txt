@@ -1,0 +1,47 @@
+.. _index:
+
+===============
+Plugin diskfree
+===============
+
+Purpose
+=======
+
+The diskfree plugin is used to monitor the space (available, used, free) on filesystems.
+
+Dependencies
+============
+
+There is no dependency.
+
+Plugin configuration
+====================
+
+There is global configuration options for this plugin.
+
+Create the devices
+==================
+
+Device type : diskfree.disk_usage
+---------------------------------
+
+2 parameters are needed for a device creation:
+
+===================== =========================== ======================================================================
+Key                   Type                        Description
+===================== =========================== ======================================================================
+device                string                      The path to monitor on the filesystem. Example : */home*
+--------------------- --------------------------- ----------------------------------------------------------------------
+interval              number                      The time in minutes between each time the filesystem space is monitored
+--------------------- --------------------------- ----------------------------------------------------------------------
+
+Start the plugin
+================
+
+You can now start the plugin (start button) and use the created devices.
+
+Set up your widgets on the user interface
+=========================================
+
+You can now place the widgets of your devices features on the user interface.
+

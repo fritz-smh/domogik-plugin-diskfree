@@ -37,7 +37,7 @@
     },
     "xpl_stats": {
        "get_percent_used": {
-            "name": "get_percent_used",
+            "name": "Percent used",
             "schema": "sensor.basic",
             "parameters": {
                     "static": [
@@ -57,7 +57,7 @@
        	    }
        },
        "get_used_space": {
-            "name": "get_used_space",
+            "name": "Used space",
             "schema": "sensor.basic",
             "parameters": {
                     "static": [
@@ -77,7 +77,7 @@
        	    }
        },
        "get_total_space": {
-            "name": "get_total_space",
+            "name": "Total space",
             "schema": "sensor.basic",
             "parameters": {
                     "static": [
@@ -97,7 +97,7 @@
        	    }
        },
        "get_free_space": {
-            "name": "get_free_space",
+            "name": "Free space",
             "schema": "sensor.basic",
             "parameters": {
                     "static": [

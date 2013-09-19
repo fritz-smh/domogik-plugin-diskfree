@@ -37,9 +37,9 @@ Implements
 
 from domogik.xpl.common.xplmessage import XplMessage
 from domogik.xpl.common.plugin import XplPlugin
-from domogik.xpl.common.queryconfig import Query
-from domogik.mq.reqrep.client import MQSyncReq
-from domogik.mq.message import MQMessage
+#from domogik.xpl.common.queryconfig import Query
+#from domogik.mq.reqrep.client import MQSyncReq
+#from domogik.mq.message import MQMessage
 
 from packages.plugin_diskfree.lib.diskfree import Disk
 import threading
@@ -56,8 +56,8 @@ class DiskManager(XplPlugin):
         XplPlugin.__init__(self, name='diskfree')
 
         # check if the plugin is configured. If not, this will stop the plugin and log an error
-        if not self.check_configured():
-            return
+        #if not self.check_configured():
+        #    return
 
         # get the devices list
         self.devices = self.get_device_list(quit_if_no_device = True)
