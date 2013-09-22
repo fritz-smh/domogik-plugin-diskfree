@@ -1,0 +1,38 @@
+========================
+Development informations
+========================
+
+How it the disk space data found ?
+==================================
+
+The plugin just use the ``os.statvfs(path)`` function.
+
+xPL messages
+============
+
+xpl-stat
+--------
+
+The **sensor.basic** message is used: ::
+
+    xpl-stat
+    {
+    ...
+    }
+    sensor.basic
+    {
+    type=<one of these values : total_space, free_space, used_space, percent_used>
+    device=<path>
+    current=<value>
+    }
+
+xpl-trig
+--------
+
+n/a
+
+xpl-cmnd
+--------
+
+n/a
+
