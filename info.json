@@ -151,6 +151,5 @@
         "type": "plugin", 
         "version": "1.0a0"
     }, 
-    "json_version": 2,
-    "udev_rules": []
+    "json_version": 2
 }
