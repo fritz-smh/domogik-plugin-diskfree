@@ -48,7 +48,7 @@ class Disk:
             @param log : log instance
             @param callback : callback
         """
-        self._log = log
+        self.log = log
         self._callback = callback
         self._stop = stop
 
@@ -120,7 +120,7 @@ class off_Disk:
             @param log : log instance
             @param callback : callback
         """
-        self._log = log
+        self.log = log
         self._callback = callback
         self._stop = stop
 
@@ -129,7 +129,7 @@ class off_Disk:
         @param stop : an Event to wait for stop request
         """
         # listen to mir:ror
-        self._log.info("Start loop")
+        self.log.info("Start loop")
         # infinite
         while not self._stop.isSet():
             # todo : move following lines to a read() function
