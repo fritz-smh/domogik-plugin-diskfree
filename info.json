@@ -124,7 +124,7 @@
             "name": "Disk usage",
             "commands": [],
             "sensors": ["get_total_space", "get_percent_used", "get_free_space", "get_used_space"],
-            "xpl_params": [
+            "params": [
                 {
                     "key": "device",
                     "description": "The path to look at.",
