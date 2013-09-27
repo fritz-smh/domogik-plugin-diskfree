@@ -3,11 +3,9 @@
         {
             "default": false,
             "description": "Automatically start the plugin at Domogik startup", 
-            "sort": "0", 
             "key": "auto_startup",
             "name" : "Start the plugin with Domogik",
             "required": true,
-            "options": [], 
             "type": "boolean"
         }
     ], 
@@ -142,10 +140,8 @@
         "author": "Fritz", 
         "author_email": "fritz.smh at gmail.com", 
         "tags": ["computer"], 
-        "changelog": "1.0\n- update to Domogik 0.4 format\n\n0.1\n- plugin creation", 
         "dependencies": [], 
         "description": "Send over xPL disk usage", 
-        "documentation": "#",
         "domogik_min_version": "0.4.0", 
         "name": "diskfree", 
         "type": "plugin", 
