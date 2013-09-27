@@ -3,6 +3,8 @@
 
 from domogik.xpl.common.plugin import XplPlugin
 from domogik.tests.common.plugintestcase import PluginTestCase
+from domogik.tests.common.testdevice import TestDevice
+from domogik.common.utils import get_sanitized_hostname
 import unittest
 import sys
 
@@ -25,12 +27,23 @@ if __name__ == "__main__":
                            parser = None, 
                            nohub = True,
                            test  = True)
+
     # set up the plugin name
     name = "diskfree"
-    # set up the configuration of the plugin
-    # TODO : clean existing configuration
-    cfg = { 'configured' : True }
 
+    # set up the configuration of the plugin
+    # configuration is done in test_0010_configure_the_plugin with the cfg content
+    # notice that the old configuration is deleted before
+    cfg = { 'configured' : True }
+   
+
+    # delete existing devices for this plugin on this host
+    # TODO
+
+    # create a test device
+    td = TestDevice()
+    td.create_device("plugin", "diskfree", get_sanitized_hostname(), "test_device_diskfree", "diskfree.disk_usage")
+    td.configure_global_parameters({"device" : "/home", "interval" : 1})
     
     # prepare and run the test suite
     suite = unittest.TestSuite()
@@ -40,5 +53,6 @@ if __name__ == "__main__":
     suite.addTest(DiskfreeTestCase("test_9999_hbeat", xpl_plugin, name, cfg))
     unittest.TextTestRunner().run(suite)
     
+    # quit
     xpl_plugin.force_leave()
     
