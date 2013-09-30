@@ -72,6 +72,9 @@ class DiskManager(XplPlugin):
                 # feature get_total_space
                 path = self.get_parameter_for_feature(a_device, "xpl_stats", "get_total_space", "device")
                 interval = self.get_parameter_for_feature(a_device, "xpl_stats", "get_total_space", "interval")
+                if path == None or interval == None:
+                    self.log.error("Invalid values for device '{0}' : path = '{1}' / interval = '{2}'. Nothing will be done for this device!".format(a_device['name'], path, interval))
+                    break
                 self.log.info("Start monitoring totel space for '%s'" % path)
                 thr_name = "{0}-{1}".format(a_device['name'], "get_total_space")
                 threads[thr_name] = threading.Thread(None,
