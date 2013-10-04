@@ -8,6 +8,8 @@ from domogik.tests.common.testdevice import TestDevice
 from domogik.common.utils import get_sanitized_hostname
 import unittest
 import sys
+import os
+import traceback
 
 class DiskfreeTestCase(PluginTestCase):
 
@@ -31,14 +33,25 @@ class DiskfreeTestCase(PluginTestCase):
             }
         """
         global interval
+        global path
+
+        # get the current total space on the device
+        du = os.statvfs(path)
+        du_total = (du.f_blocks * du.f_frsize) / 1024
+
+        # do the test
         print("Check that a message about total space is sent. The message must be received each {0} minute(s)".format(interval))
+        
         self.assertTrue(self.wait_for_xpl(xpltype = "xpl-stat",
                                           xplschema = "sensor.basic",
                                           xplsource = "domogik-{0}.{1}".format(self.name, get_sanitized_hostname()),
                                           data = {"type" : "total_space", 
-                                                  "device" : "/home"},
+                                                  "device" : path,
+                                                  "current" : du_total},
                                           timeout = interval * 60))
+        # TODO doc : tell that the last xpl message is available in self.xpl_data
         # TODO : do it twice to check the interval is ok
+        # TODO : check if the time between the 2 messages is the good one
 
 
     def test_0120_free_space(self):
@@ -106,6 +119,7 @@ if __name__ == "__main__":
 
     ### global variables
     interval = 1    
+    path = "/home"
 
     ### configuration
 
@@ -131,10 +145,14 @@ if __name__ == "__main__":
     # TODO
 
     # create a test device
-    #td = TestDevice()
-    #td.create_device("plugin", "diskfree", get_sanitized_hostname(), "test_device_diskfree", "diskfree.disk_usage")
-    #td.configure_global_parameters({"device" : "/home", "interval" : interval})
-
+    try:
+        td = TestDevice()
+        td.create_device("plugin", "diskfree", get_sanitized_hostname(), "test_device_diskfree", "diskfree.disk_usage")
+        td.configure_global_parameters({"device" : path, "interval" : interval})
+    except: 
+        print("Error while creating the test devices : {0}".format(traceback.format_exc()))
+        sys.exit(1)
+    
     ### prepare and run the test suite
     suite = unittest.TestSuite()
     # check domogik is running, configure the plugin
@@ -142,17 +160,15 @@ if __name__ == "__main__":
     suite.addTest(DiskfreeTestCase("test_0010_configure_the_plugin", xpl_plugin, name, cfg))
     
     # start the plugin
-    # TODO : move in PluginTestCase and create some tests : test_0020
-    #tp = TestPlugin("diskfree", "darkstar")
-    #tp.request_startup()
-    #tp.wait_for_startup()
+    suite.addTest(DiskfreeTestCase("test_0050_start_the_plugin", xpl_plugin, name, cfg))
 
     # do the specific plugin tests
     suite.addTest(DiskfreeTestCase("test_0100_dummy", xpl_plugin, name, cfg))
     suite.addTest(DiskfreeTestCase("test_0110_total_space", xpl_plugin, name, cfg))
 
     # do some tests comon to all the plugins
-    suite.addTest(DiskfreeTestCase("test_9999_hbeat", xpl_plugin, name, cfg))
+    #suite.addTest(DiskfreeTestCase("test_9900_hbeat", xpl_plugin, name, cfg))
+    suite.addTest(DiskfreeTestCase("test_9990_stop_the_plugin", xpl_plugin, name, cfg))
     unittest.TextTestRunner().run(suite)
     
     # quit

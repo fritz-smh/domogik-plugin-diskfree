@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
-from domogik.tests.common.helpers import configure
+from domogik.tests.common.helpers import configure, delete_configuration
 
-configure("plugin", "diskfree", "darkstar", "configured", True)
+delete_configuration("plugin", "diskfree", get_sanitized_hostname())
+configure("plugin", "diskfree", get_sanitized_hostname(), "configured", True)
 
