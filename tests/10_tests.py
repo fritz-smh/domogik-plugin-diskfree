@@ -141,13 +141,20 @@ if __name__ == "__main__":
 
     ### start tests
 
+    # load the test devices class
+    td = TestDevice()
+
     # delete existing devices for this plugin on this host
-    # TODO
+    client_id = "{0}-{1}.{2}".format("plugin", name, get_sanitized_hostname())
+    try:
+        td.del_devices_by_client(client_id)
+    except: 
+        print("Error while deleting all the test device for the client id '{0}' : {1}".format(client_id, traceback.format_exc()))
+        sys.exit(1)
 
     # create a test device
     try:
-        td = TestDevice()
-        td.create_device("plugin", "diskfree", get_sanitized_hostname(), "test_device_diskfree", "diskfree.disk_usage")
+        td.create_device("plugin", name, get_sanitized_hostname(), "test_device_diskfree", "diskfree.disk_usage")
         td.configure_global_parameters({"device" : path, "interval" : interval})
     except: 
         print("Error while creating the test devices : {0}".format(traceback.format_exc()))
