@@ -6,6 +6,7 @@ from domogik.tests.common.plugintestcase import PluginTestCase
 from domogik.tests.common.testplugin import TestPlugin
 from domogik.tests.common.testdevice import TestDevice
 from domogik.common.utils import get_sanitized_hostname
+from datetime import datetime
 import unittest
 import sys
 import os
@@ -49,9 +50,20 @@ class DiskfreeTestCase(PluginTestCase):
                                                   "device" : path,
                                                   "current" : du_total},
                                           timeout = interval * 60))
+        msg1_time = datetime.now()
         # TODO doc : tell that the last xpl message is available in self.xpl_data
-        # TODO : do it twice to check the interval is ok
-        # TODO : check if the time between the 2 messages is the good one
+
+        print("Check there is a second message is sent and the interval between them")
+        self.assertTrue(self.wait_for_xpl(xpltype = "xpl-stat",
+                                          xplschema = "sensor.basic",
+                                          xplsource = "domogik-{0}.{1}".format(self.name, get_sanitized_hostname()),
+                                          data = {"type" : "total_space", 
+                                                  "device" : path,
+                                                  "current" : du_total},
+                                          timeout = interval * 60))
+        msg2_time = datetime.now()
+
+        self.assertTrue(self.is_interval_of(interval * 60, msg2_time - msg1_time))
 
 
     def test_0120_free_space(self):
@@ -112,9 +124,6 @@ class DiskfreeTestCase(PluginTestCase):
 
 if __name__ == "__main__":
     # TODO : allow to bypass hand questions for full auto tests
-    # TODO : create devices
-    # TODO : start plugin
-    # TODO : ... and check the plugin is in the appropriate status
     # TODO : add some generic tests about plugin not configured, no devices created and check the plugin status ?
 
     ### global variables
