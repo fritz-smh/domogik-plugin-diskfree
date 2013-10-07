@@ -62,7 +62,6 @@ class DiskfreeTestCase(PluginTestCase):
                                                   "current" : du_total},
                                           timeout = interval * 60))
         msg2_time = datetime.now()
-
         self.assertTrue(self.is_interval_of(interval * 60, msg2_time - msg1_time))
 
 
@@ -82,7 +81,46 @@ class DiskfreeTestCase(PluginTestCase):
             current=4109696
             }
         """
-        pass
+        global interval
+        global path
+
+        # do the test
+        print("Check that a message about free space is sent. The message must be received each {0} minute(s)".format(interval))
+        
+        self.assertTrue(self.wait_for_xpl(xpltype = "xpl-stat",
+                                          xplschema = "sensor.basic",
+                                          xplsource = "domogik-{0}.{1}".format(self.name, get_sanitized_hostname()),
+                                          data = {"type" : "free_space", 
+                                                  "device" : path},
+                                          timeout = interval * 60))
+        msg1_time = datetime.now()
+        xpl_current = float(self.xpl_data.data['current'])
+        # get the current free space on the device
+        du = os.statvfs(path)
+        du_free_space = float((du.f_bavail * du.f_frsize) / 1024)
+        diff_percent = float(abs(float(xpl_current) - du_free_space)/du_free_space)
+        # as the disk free size can change, we assume that a difference which is less than 2% is a good result)
+        if diff_percent > 0.02:
+            ok = False
+        else:
+            ok = True
+        print("Real free size on disk = {0}".format(du_free_space))
+        print("Plugin indicates free size on disk = {0}".format(xpl_current))
+        print("The allowed difference is 2%. The difference is {0}%".format(diff_percent))
+        self.assertTrue(ok)
+
+        # TODO doc : tell that the last xpl message is available in self.xpl_data
+        # TODO doc : tell to use percent comparison for non fixed values
+
+        print("Check there is a second message is sent and the interval between them")
+        self.assertTrue(self.wait_for_xpl(xpltype = "xpl-stat",
+                                          xplschema = "sensor.basic",
+                                          xplsource = "domogik-{0}.{1}".format(self.name, get_sanitized_hostname()),
+                                          data = {"type" : "free_space", 
+                                                  "device" : path},
+                                          timeout = interval * 60))
+        msg2_time = datetime.now()
+        self.assertTrue(self.is_interval_of(interval * 60, msg2_time - msg1_time))
 
     def test_0130_used_space(self):
         """ check if the xpl messages about used space are OK
@@ -100,7 +138,47 @@ class DiskfreeTestCase(PluginTestCase):
             current=14378992
             }
         """
-        pass
+        global interval
+        global path
+
+        # do the test
+        print("Check that a message about used space is sent. The message must be received each {0} minute(s)".format(interval))
+        
+        self.assertTrue(self.wait_for_xpl(xpltype = "xpl-stat",
+                                          xplschema = "sensor.basic",
+                                          xplsource = "domogik-{0}.{1}".format(self.name, get_sanitized_hostname()),
+                                          data = {"type" : "used_space", 
+                                                  "device" : path},
+                                          timeout = interval * 60))
+        msg1_time = datetime.now()
+        xpl_current = float(self.xpl_data.data['current'])
+        # get the current used space on the device
+        du = os.statvfs(path)
+        du_used = float(((du.f_blocks - du.f_bfree) * du.f_frsize) / 1024)
+        diff_percent = float(abs(float(xpl_current) - du_used)/du_used)
+        # as the disk used size can change, we assume that a difference which is less than 2% is a good result)
+        if diff_percent > 0.02:
+            ok = False
+        else:
+            ok = True
+        print("Real used size on disk = {0}".format(du_used))
+        print("Plugin indicates used size on disk = {0}".format(xpl_current))
+        print("The allowed difference is 2%. The difference is {0}%".format(diff_percent))
+        self.assertTrue(ok)
+
+        # TODO doc : tell that the last xpl message is available in self.xpl_data
+        # TODO doc : tell to use percent comparison for non fixed values
+
+        print("Check there is a second message is sent and the interval between them")
+        self.assertTrue(self.wait_for_xpl(xpltype = "xpl-stat",
+                                          xplschema = "sensor.basic",
+                                          xplsource = "domogik-{0}.{1}".format(self.name, get_sanitized_hostname()),
+                                          data = {"type" : "used_space", 
+                                                  "device" : path},
+                                          timeout = interval * 60))
+        msg2_time = datetime.now()
+        self.assertTrue(self.is_interval_of(interval * 60, msg2_time - msg1_time))
+
 
     def test_0140_percent_used(self):
         """ check if the xpl messages about percent used are OK
@@ -118,14 +196,57 @@ class DiskfreeTestCase(PluginTestCase):
             current=73
             }
         """
-        pass
+        global interval
+        global path
 
-    # TODO : tests about the interval
+        # do the test
+        print("Check that a message about percent used is sent. The message must be received each {0} minute(s)".format(interval))
+        
+        self.assertTrue(self.wait_for_xpl(xpltype = "xpl-stat",
+                                          xplschema = "sensor.basic",
+                                          xplsource = "domogik-{0}.{1}".format(self.name, get_sanitized_hostname()),
+                                          data = {"type" : "percent_used", 
+                                                  "device" : path},
+                                          timeout = interval * 60))
+        msg1_time = datetime.now()
+        xpl_current = float(self.xpl_data.data['current'])
+
+        # get the current percent used of the device
+        du = os.statvfs(path)
+        du_total = (du.f_blocks * du.f_frsize) / 1024
+        du_used = ((du.f_blocks - du.f_bfree) * du.f_frsize) / 1024
+        # notice : % value is less than real value (df command) because of reserved blocks
+        try:
+            du_percent = (du_used * 100) / du_total
+        except ZeroDivisionError:
+            du_percent = 0
+
+        diff_percent = float(abs(float(xpl_current) - du_percent)/du_percent)
+        # as the disk percent used can change, we assume that a difference which is less than 2% is a good result)
+        if diff_percent > 0.02:
+            ok = False
+        else:
+            ok = True
+        print("Real percent used of the disk = {0}".format(du_percent))
+        print("Plugin indicates percend used of the disk = {0}".format(xpl_current))
+        print("The allowed difference is 2%. The difference is {0}%".format(diff_percent))
+        self.assertTrue(ok)
+
+        # TODO doc : tell that the last xpl message is available in self.xpl_data
+        # TODO doc : tell to use percent comparison for non fixed values
+
+        print("Check there is a second message is sent and the interval between them")
+        self.assertTrue(self.wait_for_xpl(xpltype = "xpl-stat",
+                                          xplschema = "sensor.basic",
+                                          xplsource = "domogik-{0}.{1}".format(self.name, get_sanitized_hostname()),
+                                          data = {"type" : "percent_used", 
+                                                  "device" : path},
+                                          timeout = interval * 60))
+        msg2_time = datetime.now()
+        self.assertTrue(self.is_interval_of(interval * 60, msg2_time - msg1_time))
+
 
 if __name__ == "__main__":
-    # TODO : allow to bypass hand questions for full auto tests
-    # TODO : add some generic tests about plugin not configured, no devices created and check the plugin status ?
-
     ### global variables
     interval = 1    
     path = "/home"
@@ -179,11 +300,14 @@ if __name__ == "__main__":
     suite.addTest(DiskfreeTestCase("test_0050_start_the_plugin", xpl_plugin, name, cfg))
 
     # do the specific plugin tests
-    suite.addTest(DiskfreeTestCase("test_0100_dummy", xpl_plugin, name, cfg))
+    #suite.addTest(DiskfreeTestCase("test_0100_dummy", xpl_plugin, name, cfg))
     suite.addTest(DiskfreeTestCase("test_0110_total_space", xpl_plugin, name, cfg))
+    suite.addTest(DiskfreeTestCase("test_0110_total_space", xpl_plugin, name, cfg))
+    suite.addTest(DiskfreeTestCase("test_0130_used_space", xpl_plugin, name, cfg))
+    suite.addTest(DiskfreeTestCase("test_0140_percent_used", xpl_plugin, name, cfg))
 
     # do some tests comon to all the plugins
-    #suite.addTest(DiskfreeTestCase("test_9900_hbeat", xpl_plugin, name, cfg))
+    suite.addTest(DiskfreeTestCase("test_9900_hbeat", xpl_plugin, name, cfg))
     suite.addTest(DiskfreeTestCase("test_9990_stop_the_plugin", xpl_plugin, name, cfg))
     unittest.TextTestRunner().run(suite)
     
