@@ -5,6 +5,7 @@ from domogik.xpl.common.plugin import XplPlugin
 from domogik.tests.common.plugintestcase import PluginTestCase
 from domogik.tests.common.testplugin import TestPlugin
 from domogik.tests.common.testdevice import TestDevice
+from domogik.tests.common.testsensor import TestSensor
 from domogik.common.utils import get_sanitized_hostname
 from datetime import datetime
 import unittest
@@ -35,6 +36,7 @@ class DiskfreeTestCase(PluginTestCase):
         """
         global interval
         global path
+        global device_id
 
         # get the current total space on the device
         du = os.statvfs(path)
@@ -50,7 +52,11 @@ class DiskfreeTestCase(PluginTestCase):
                                                   "device" : path,
                                                   "current" : du_total},
                                           timeout = interval * 60))
+        print ("Check that the value of the xPL message has been inserted in database")
+        sensor = TestSensor(device_id, "get_total_space")
+        self.assertTrue(sensor.get_last_value()[1] == self.xpl_data.data['current'])
         msg1_time = datetime.now()
+        
         # TODO doc : tell that the last xpl message is available in self.xpl_data
 
         print("Check there is a second message is sent and the interval between them")
@@ -83,6 +89,7 @@ class DiskfreeTestCase(PluginTestCase):
         """
         global interval
         global path
+        global device_id
 
         # do the test
         print("Check that a message about free space is sent. The message must be received each {0} minute(s)".format(interval))
@@ -93,6 +100,7 @@ class DiskfreeTestCase(PluginTestCase):
                                           data = {"type" : "free_space", 
                                                   "device" : path},
                                           timeout = interval * 60))
+
         msg1_time = datetime.now()
         xpl_current = float(self.xpl_data.data['current'])
         # get the current free space on the device
@@ -108,6 +116,10 @@ class DiskfreeTestCase(PluginTestCase):
         print("Plugin indicates free size on disk = {0}".format(xpl_current))
         print("The allowed difference is 2%. The difference is {0}%".format(diff_percent))
         self.assertTrue(ok)
+
+        print ("Check that the value of the xPL message has been inserted in database")
+        sensor = TestSensor(device_id, "get_free_space")
+        self.assertTrue(sensor.get_last_value()[1] == xpl_current)
 
         # TODO doc : tell that the last xpl message is available in self.xpl_data
         # TODO doc : tell to use percent comparison for non fixed values
@@ -140,6 +152,7 @@ class DiskfreeTestCase(PluginTestCase):
         """
         global interval
         global path
+        global device_id
 
         # do the test
         print("Check that a message about used space is sent. The message must be received each {0} minute(s)".format(interval))
@@ -165,6 +178,12 @@ class DiskfreeTestCase(PluginTestCase):
         print("Plugin indicates used size on disk = {0}".format(xpl_current))
         print("The allowed difference is 2%. The difference is {0}%".format(diff_percent))
         self.assertTrue(ok)
+
+        # TODO : move after the second message received 
+        print ("Check that the value of the xPL message has been inserted in database")
+        sensor = TestSensor(device_id, "get_used_space")
+        print "@@@@ %s    vs   %s" % (sensor.get_last_value()[1] , xpl_current)
+        self.assertTrue(float(sensor.get_last_value()[1]) == xpl_current)
 
         # TODO doc : tell that the last xpl message is available in self.xpl_data
         # TODO doc : tell to use percent comparison for non fixed values
@@ -198,6 +217,7 @@ class DiskfreeTestCase(PluginTestCase):
         """
         global interval
         global path
+        global device_id
 
         # do the test
         print("Check that a message about percent used is sent. The message must be received each {0} minute(s)".format(interval))
@@ -231,6 +251,11 @@ class DiskfreeTestCase(PluginTestCase):
         print("Plugin indicates percend used of the disk = {0}".format(xpl_current))
         print("The allowed difference is 2%. The difference is {0}%".format(diff_percent))
         self.assertTrue(ok)
+
+        print ("Check that the value of the xPL message has been inserted in database")
+        sensor = TestSensor(device_id, "get_percent_used")
+        print "@@@@ %s    vs   %s" % (sensor.get_last_value()[1] , xpl_current)
+        self.assertTrue(float(sensor.get_last_value()[1]) == xpl_current)
 
         # TODO doc : tell that the last xpl message is available in self.xpl_data
         # TODO doc : tell to use percent comparison for non fixed values
@@ -284,7 +309,7 @@ if __name__ == "__main__":
 
     # create a test device
     try:
-        td.create_device("plugin", name, get_sanitized_hostname(), "test_device_diskfree", "diskfree.disk_usage")
+        device_id = td.create_device("plugin", name, get_sanitized_hostname(), "test_device_diskfree", "diskfree.disk_usage")
         td.configure_global_parameters({"device" : path, "interval" : interval})
     except: 
         print("Error while creating the test devices : {0}".format(traceback.format_exc()))
