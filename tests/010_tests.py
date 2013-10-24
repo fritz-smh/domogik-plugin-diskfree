@@ -52,7 +52,7 @@ class DiskfreeTestCase(PluginTestCase):
                                                   "device" : path,
                                                   "current" : du_total},
                                           timeout = interval * 60))
-        print ("Check that the value of the xPL message has been inserted in database")
+        print("Check that the value of the xPL message has been inserted in database")
         sensor = TestSensor(device_id, "get_total_space")
         self.assertTrue(sensor.get_last_value()[1] == self.xpl_data.data['current'])
         msg1_time = datetime.now()
@@ -117,7 +117,7 @@ class DiskfreeTestCase(PluginTestCase):
         print("The allowed difference is 2%. The difference is {0}%".format(diff_percent))
         self.assertTrue(ok)
 
-        print ("Check that the value of the xPL message has been inserted in database")
+        print("Check that the value of the xPL message has been inserted in database")
         sensor = TestSensor(device_id, "get_free_space")
         self.assertTrue(sensor.get_last_value()[1] == xpl_current)
 
@@ -180,9 +180,8 @@ class DiskfreeTestCase(PluginTestCase):
         self.assertTrue(ok)
 
         # TODO : move after the second message received 
-        print ("Check that the value of the xPL message has been inserted in database")
+        print("Check that the value of the xPL message has been inserted in database")
         sensor = TestSensor(device_id, "get_used_space")
-        print "@@@@ %s    vs   %s" % (sensor.get_last_value()[1] , xpl_current)
         self.assertTrue(float(sensor.get_last_value()[1]) == xpl_current)
 
         # TODO doc : tell that the last xpl message is available in self.xpl_data
@@ -252,9 +251,8 @@ class DiskfreeTestCase(PluginTestCase):
         print("The allowed difference is 2%. The difference is {0}%".format(diff_percent))
         self.assertTrue(ok)
 
-        print ("Check that the value of the xPL message has been inserted in database")
+        print("Check that the value of the xPL message has been inserted in database")
         sensor = TestSensor(device_id, "get_percent_used")
-        print "@@@@ %s    vs   %s" % (sensor.get_last_value()[1] , xpl_current)
         self.assertTrue(float(sensor.get_last_value()[1]) == xpl_current)
 
         # TODO doc : tell that the last xpl message is available in self.xpl_data
