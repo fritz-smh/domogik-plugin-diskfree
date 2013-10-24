@@ -43,7 +43,7 @@ class DiskfreeTestCase(PluginTestCase):
         du_total = (du.f_blocks * du.f_frsize) / 1024
 
         # do the test
-        print("Check that a message about total space is sent. The message must be received each {0} minute(s)".format(interval))
+        print(u"Check that a message about total space is sent. The message must be received each {0} minute(s)".format(interval))
         
         self.assertTrue(self.wait_for_xpl(xpltype = "xpl-stat",
                                           xplschema = "sensor.basic",
@@ -52,14 +52,14 @@ class DiskfreeTestCase(PluginTestCase):
                                                   "device" : path,
                                                   "current" : du_total},
                                           timeout = interval * 60))
-        print("Check that the value of the xPL message has been inserted in database")
+        print(u"Check that the value of the xPL message has been inserted in database")
         sensor = TestSensor(device_id, "get_total_space")
         self.assertTrue(sensor.get_last_value()[1] == self.xpl_data.data['current'])
         msg1_time = datetime.now()
         
         # TODO doc : tell that the last xpl message is available in self.xpl_data
 
-        print("Check there is a second message is sent and the interval between them")
+        print(u"Check there is a second message is sent and the interval between them")
         self.assertTrue(self.wait_for_xpl(xpltype = "xpl-stat",
                                           xplschema = "sensor.basic",
                                           xplsource = "domogik-{0}.{1}".format(self.name, get_sanitized_hostname()),
@@ -92,7 +92,7 @@ class DiskfreeTestCase(PluginTestCase):
         global device_id
 
         # do the test
-        print("Check that a message about free space is sent. The message must be received each {0} minute(s)".format(interval))
+        print(u"Check that a message about free space is sent. The message must be received each {0} minute(s)".format(interval))
         
         self.assertTrue(self.wait_for_xpl(xpltype = "xpl-stat",
                                           xplschema = "sensor.basic",
@@ -112,19 +112,19 @@ class DiskfreeTestCase(PluginTestCase):
             ok = False
         else:
             ok = True
-        print("Real free size on disk = {0}".format(du_free_space))
-        print("Plugin indicates free size on disk = {0}".format(xpl_current))
-        print("The allowed difference is 2%. The difference is {0}%".format(diff_percent))
+        print(u"Real free size on disk = {0}".format(du_free_space))
+        print(u"Plugin indicates free size on disk = {0}".format(xpl_current))
+        print(u"The allowed difference is 2%. The difference is {0}%".format(diff_percent))
         self.assertTrue(ok)
 
-        print("Check that the value of the xPL message has been inserted in database")
+        print(u"Check that the value of the xPL message has been inserted in database")
         sensor = TestSensor(device_id, "get_free_space")
         self.assertTrue(sensor.get_last_value()[1] == xpl_current)
 
         # TODO doc : tell that the last xpl message is available in self.xpl_data
         # TODO doc : tell to use percent comparison for non fixed values
 
-        print("Check there is a second message is sent and the interval between them")
+        print(u"Check there is a second message is sent and the interval between them")
         self.assertTrue(self.wait_for_xpl(xpltype = "xpl-stat",
                                           xplschema = "sensor.basic",
                                           xplsource = "domogik-{0}.{1}".format(self.name, get_sanitized_hostname()),
@@ -155,7 +155,7 @@ class DiskfreeTestCase(PluginTestCase):
         global device_id
 
         # do the test
-        print("Check that a message about used space is sent. The message must be received each {0} minute(s)".format(interval))
+        print(u"Check that a message about used space is sent. The message must be received each {0} minute(s)".format(interval))
         
         self.assertTrue(self.wait_for_xpl(xpltype = "xpl-stat",
                                           xplschema = "sensor.basic",
@@ -174,20 +174,20 @@ class DiskfreeTestCase(PluginTestCase):
             ok = False
         else:
             ok = True
-        print("Real used size on disk = {0}".format(du_used))
-        print("Plugin indicates used size on disk = {0}".format(xpl_current))
-        print("The allowed difference is 2%. The difference is {0}%".format(diff_percent))
+        print(u"Real used size on disk = {0}".format(du_used))
+        print(u"Plugin indicates used size on disk = {0}".format(xpl_current))
+        print(u"The allowed difference is 2%. The difference is {0}%".format(diff_percent))
         self.assertTrue(ok)
 
         # TODO : move after the second message received 
-        print("Check that the value of the xPL message has been inserted in database")
+        print(u"Check that the value of the xPL message has been inserted in database")
         sensor = TestSensor(device_id, "get_used_space")
         self.assertTrue(float(sensor.get_last_value()[1]) == xpl_current)
 
         # TODO doc : tell that the last xpl message is available in self.xpl_data
         # TODO doc : tell to use percent comparison for non fixed values
 
-        print("Check there is a second message is sent and the interval between them")
+        print(u"Check there is a second message is sent and the interval between them")
         self.assertTrue(self.wait_for_xpl(xpltype = "xpl-stat",
                                           xplschema = "sensor.basic",
                                           xplsource = "domogik-{0}.{1}".format(self.name, get_sanitized_hostname()),
@@ -219,7 +219,7 @@ class DiskfreeTestCase(PluginTestCase):
         global device_id
 
         # do the test
-        print("Check that a message about percent used is sent. The message must be received each {0} minute(s)".format(interval))
+        print(u"Check that a message about percent used is sent. The message must be received each {0} minute(s)".format(interval))
         
         self.assertTrue(self.wait_for_xpl(xpltype = "xpl-stat",
                                           xplschema = "sensor.basic",
@@ -246,19 +246,19 @@ class DiskfreeTestCase(PluginTestCase):
             ok = False
         else:
             ok = True
-        print("Real percent used of the disk = {0}".format(du_percent))
-        print("Plugin indicates percend used of the disk = {0}".format(xpl_current))
-        print("The allowed difference is 2%. The difference is {0}%".format(diff_percent))
+        print(u"Real percent used of the disk = {0}".format(du_percent))
+        print(u"Plugin indicates percend used of the disk = {0}".format(xpl_current))
+        print(u"The allowed difference is 2%. The difference is {0}%".format(diff_percent))
         self.assertTrue(ok)
 
-        print("Check that the value of the xPL message has been inserted in database")
+        print(u"Check that the value of the xPL message has been inserted in database")
         sensor = TestSensor(device_id, "get_percent_used")
         self.assertTrue(float(sensor.get_last_value()[1]) == xpl_current)
 
         # TODO doc : tell that the last xpl message is available in self.xpl_data
         # TODO doc : tell to use percent comparison for non fixed values
 
-        print("Check there is a second message is sent and the interval between them")
+        print(u"Check there is a second message is sent and the interval between them")
         self.assertTrue(self.wait_for_xpl(xpltype = "xpl-stat",
                                           xplschema = "sensor.basic",
                                           xplsource = "domogik-{0}.{1}".format(self.name, get_sanitized_hostname()),
@@ -302,7 +302,7 @@ if __name__ == "__main__":
     try:
         td.del_devices_by_client(client_id)
     except: 
-        print("Error while deleting all the test device for the client id '{0}' : {1}".format(client_id, traceback.format_exc()))
+        print(u"Error while deleting all the test device for the client id '{0}' : {1}".format(client_id, traceback.format_exc()))
         sys.exit(1)
 
     # create a test device
@@ -310,7 +310,7 @@ if __name__ == "__main__":
         device_id = td.create_device("plugin", name, get_sanitized_hostname(), "test_device_diskfree", "diskfree.disk_usage")
         td.configure_global_parameters({"device" : path, "interval" : interval})
     except: 
-        print("Error while creating the test devices : {0}".format(traceback.format_exc()))
+        print(u"Error while creating the test devices : {0}".format(traceback.format_exc()))
         sys.exit(1)
     
     ### prepare and run the test suite

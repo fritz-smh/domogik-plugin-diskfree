@@ -61,7 +61,7 @@ class Disk:
                 du_total = (du.f_blocks * du.f_frsize) / 1024
                 self._callback(path, "total_space", du_total)
             except:
-                self.log.error("Error for getting total space on path {0} : {1}".format(path, traceback.format_exc()))
+                self.log.error(u"Error for getting total space on path {0} : {1}".format(path, traceback.format_exc()))
             self._stop.wait(interval*60)
     
     
@@ -74,7 +74,7 @@ class Disk:
                 du_free = (du.f_bavail * du.f_frsize) / 1024
                 self._callback(path, "free_space", du_free)
             except:
-                self.log.error("Error for getting free space on path {0} : {1}".format(path, traceback.format_exc()))
+                self.log.error(u"Error for getting free space on path {0} : {1}".format(path, traceback.format_exc()))
             self._stop.wait(interval*60)
     
     
@@ -87,7 +87,7 @@ class Disk:
                 du_used = ((du.f_blocks - du.f_bfree) * du.f_frsize) / 1024
                 self._callback(path, "used_space", du_used)
             except:
-                self.log.error("Error for getting used space on path {0} : {1}".format(path, traceback.format_exc()))
+                self.log.error(u"Error for getting used space on path {0} : {1}".format(path, traceback.format_exc()))
             self._stop.wait(interval*60)
     
     
@@ -106,7 +106,7 @@ class Disk:
                     du_percent = 0
                 self._callback(path, "percent_used", du_percent)
             except:
-                self.log.error("Error for getting percent used on path {0} : {1}".format(path, traceback.format_exc()))
+                self.log.error(u"Error for getting percent used on path {0} : {1}".format(path, traceback.format_exc()))
             self._stop.wait(interval*60)
 
 
@@ -129,7 +129,7 @@ class off_Disk:
         @param stop : an Event to wait for stop request
         """
         # listen to mir:ror
-        self.log.info("Start loop")
+        self.log.info(u"Start loop")
         # infinite
         while not self._stop.isSet():
             # todo : move following lines to a read() function
