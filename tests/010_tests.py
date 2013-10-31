@@ -307,7 +307,7 @@ if __name__ == "__main__":
 
     # create a test device
     try:
-        device_id = td.create_device("plugin", name, get_sanitized_hostname(), "test_device_diskfree", "diskfree.disk_usage")
+        device_id = td.create_device(client_id, "test_device_diskfree", "diskfree.disk_usage")
         td.configure_global_parameters({"device" : path, "interval" : interval})
     except: 
         print(u"Error while creating the test devices : {0}".format(traceback.format_exc()))
