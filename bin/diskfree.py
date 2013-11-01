@@ -37,11 +37,8 @@ Implements
 
 from domogik.xpl.common.xplmessage import XplMessage
 from domogik.xpl.common.plugin import XplPlugin
-#from domogik.xpl.common.queryconfig import Query
-#from domogik.mq.reqrep.client import MQSyncReq
-#from domogik.mq.message import MQMessage
 
-from packages.plugin_diskfree.lib.diskfree import Disk
+from domogik_packages.plugin_diskfree.lib.diskfree import Disk
 import threading
 import traceback
 
