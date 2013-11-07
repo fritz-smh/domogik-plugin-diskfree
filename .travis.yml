@@ -1,6 +1,8 @@
 # TODO
 # - after success and similar => dashboard
-language: python
+addons:
+  hosts:
+    - domogikhost
 python:
   - "2.7"
 mysql:
@@ -25,6 +27,7 @@ script:
   - git clone https://github.com/domogik/domogik.git
   - cd domogik
   - git checkout 0.4-candidate
+  - git log -n 1
   # temporary fix
   - sudo mkdir -p /var/lock/domogik && chown $LOGNAME:root /var/lock/domogik
   - sudo touch /var/lock/domogik/config.lock  && chown $LOGNAME:root /var/lock/domogik/config.lock
