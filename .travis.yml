@@ -17,7 +17,6 @@ install:
   - apt-cache search libzmq
   - sudo apt-get install libzmq3-dev
   - sudo pip install pyzmq
-  - sudo pip install requests
   - sudo apt-get install python-argparse
   - sudo apt-get install python2.7-dev gcc
   - sudo apt-get install libssl-dev
@@ -37,8 +36,12 @@ script:
   - sudo chown $LOGNAME:root /var/lock/domogik/config.lock
   - sudo chown $LOGNAME:root /var/log/domogik/*
   - ls -l /var/lock/domogik/
-  - sudo /etc/init.d/domogik start
   - cd $TRAVIS_BUILD_DIR
+  - ls -l
+  - pwd
+  - ln -s $(pwd) /var/lib/domogik/plugin_diskfree
+  - ls -l /var/lib/domogik/plugin_diskfree
+  - sudo /etc/init.d/domogik start
   - sleep 10
   - python tests/010_tests.py
 after_failure: 
