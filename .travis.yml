@@ -37,7 +37,12 @@ script:
   - ls -l /var/lock/domogik/
   - sudo /etc/init.d/domogik start
   - cd $TRAVIS_BUILD_DIR
+  - sleep 30
   - python tests/001_configure.py
 after_failure: 
+  - cat /var/log/domogik/diskfree.log
   - cat /var/log/domogik/dbmgr.log
+  - cat /var/log/domogik/manager.log
+  - cat /var/log/domogik/rest.log
+  - cat /var/log/domogik/xplgw.log
   - cat /var/log/domogik/mq_broker.log
