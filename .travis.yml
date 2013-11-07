@@ -12,7 +12,7 @@ before_script:
   - "mysql -e 'create database domogik;'"
 install:
   - apt-cache search libzmq
-  - sudo apt-get install libzmq-dev
+  - sudo apt-get install libzmq3-dev
   - sudo pip install pyzmq
   - sudo apt-get install python-argparse
   - sudo apt-get install python2.7-dev gcc
