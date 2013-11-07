@@ -16,7 +16,6 @@ install:
   - sudo apt-get install libssl-dev
   - sudo apt-get install libmysqlclient-dev mysql-client
   - sudo apt-get install python-psycopg2
-  - sudo apt-get install libzmq-dev
 script:
   - cd ~
   - git clone https://github.com/domogik/domogik.git
