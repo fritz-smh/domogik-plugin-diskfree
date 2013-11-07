@@ -39,7 +39,7 @@ script:
   - sudo /etc/init.d/domogik start
   - cd $TRAVIS_BUILD_DIR
   - sleep 30
-  - python tests/001_configure.py
+  - python tests/010_tests.py
 after_failure: 
   - ps -ef | grep dmg
   - cat /etc/default/domogik
