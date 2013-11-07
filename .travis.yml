@@ -17,6 +17,7 @@ install:
   - apt-cache search libzmq
   - sudo apt-get install libzmq3-dev
   - sudo pip install pyzmq
+  - sudo pip install requests
   - sudo apt-get install python-argparse
   - sudo apt-get install python2.7-dev gcc
   - sudo apt-get install libssl-dev
