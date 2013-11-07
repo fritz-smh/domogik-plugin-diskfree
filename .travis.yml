@@ -2,7 +2,6 @@
 # - after success and similar => dashboard
 language: python
 python:
-  - "2.6"
   - "2.7"
 mysql:
   adapter: mysql2
@@ -22,7 +21,7 @@ script:
   - git clone https://github.com/domogik/domogik.git
   - cd domogik
   - git checkout 0.4-candidate
-  - python install.py --user domogik --command-line --domogik_log_level debug --domogik_bind_interface 127.0.0.1 --database_name domogik --rest_interfaces lo --rest_clean_json True --mq_ip 127.0.0.1 --hub_interfaces lo --hub_log_level info --hub_log_bandwidth True --hub_log_invalid_data True
+  - sudo python install.py --user domogik --command-line --domogik_log_level debug --domogik_bind_interface 127.0.0.1 --database_name domogik --rest_interfaces lo --rest_clean_json True --mq_ip 127.0.0.1 --hub_interfaces lo --hub_log_level info --hub_log_bandwidth True --hub_log_invalid_data True
   - sudo /etc/init.d/domogik start
   - cd $TRAVIS_BUILD_DIR
   - python tests/001_configure.py
