@@ -41,6 +41,7 @@ script:
   - python tests/001_configure.py
 after_failure: 
   - cat /var/log/domogik/diskfree.log
+  - cat /var/log/domogik/db_api.log
   - cat /var/log/domogik/dbmgr.log
   - cat /var/log/domogik/manager.log
   - cat /var/log/domogik/rest.log
