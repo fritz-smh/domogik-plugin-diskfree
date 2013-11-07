@@ -38,3 +38,6 @@ script:
   - sudo /etc/init.d/domogik start
   - cd $TRAVIS_BUILD_DIR
   - python tests/001_configure.py
+after_failure: 
+  - cat /var/log/domogik/dbmgr.log
+  - cat /var/log/domogik/mq_broker.log
