@@ -40,6 +40,8 @@ script:
   - sleep 30
   - python tests/001_configure.py
 after_failure: 
+  - ps -ef | grep dmg
+  - cat /etc/default/domogik
   - cat /var/log/domogik/diskfree.log
   - cat /var/log/domogik/db_api.log
   - cat /var/log/domogik/dbmgr.log
