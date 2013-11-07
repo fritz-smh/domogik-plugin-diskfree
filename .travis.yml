@@ -25,6 +25,9 @@ script:
   - git clone https://github.com/domogik/domogik.git
   - cd domogik
   - git checkout 0.4-candidate
+  # temporary fix
+  - mkdir -p /var/lock/domogik && chown $LOGNAME:root /var/lock/domogik
+  - touch /var/lock/domogik/config.lock  && chown fritz:root /var/lock/domogik/config.lock
   - sudo python install.py --user $LOGNAME --command-line --domogik_log_level debug --domogik_bind_interface 127.0.0.1 --database_name domogik --database_user travis --rest_interfaces lo --rest_clean_json True --mq_ip 127.0.0.1 --hub_interfaces lo --hub_log_level info --hub_log_bandwidth True --hub_log_invalid_data True
   - ls -l /var/lock/domogik/
   - sudo /etc/init.d/domogik start
