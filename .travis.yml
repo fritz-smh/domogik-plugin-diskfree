@@ -27,7 +27,6 @@ script:
   - git clone https://github.com/domogik/domogik.git
   - cd domogik
   - git checkout 0.4-candidate
-  - git log -n 1
   - sudo mkdir -p /var/lock/domogik 
   - sudo chown $LOGNAME:root /var/lock/domogik
   - sudo touch /var/lock/domogik/config.lock 
