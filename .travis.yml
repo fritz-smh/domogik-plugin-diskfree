@@ -2,11 +2,33 @@ language: python
 python:
   - "2.6"
   - "2.7"
+mysql:
+  adapter: mysql2
+  database: domogik
+  username: travis
+  encoding: utf8
+before_script:
+  - "mysql -e 'create database domogik;'"
 install:
   - sudo apt-get install python2.7-dev gcc
   - sudo apt-get install libssl-dev
   - sudo apt-get install libmysqlclient-dev mysql-client
   - sudo apt-get install python-psycopg2
+  - git clone https://github.com/domogik/domogik.git
+  - git checkout 0.4-candidate
+  - python install.py \
+--user domogik \
+--command-line \
+--domogik_log_level debug \
+--domogik_bind_interface 127.0.0.1 \
+--database_name domogik \
+--rest_interfaces lo \
+--rest_clean_json True \
+--mq_ip 127.0.0.1 \
+--hub_interfaces lo \
+--hub_log_level info \
+--hub_log_bandwidth True \
+--hub_log_invalid_data True
 script:
   - python tests/001_configure.py
 
