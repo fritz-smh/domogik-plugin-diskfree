@@ -10,6 +10,7 @@ mysql:
   encoding: utf8
 before_script:
   - "mysql -e 'create database domogik;'"
+  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('domopass') WHERE user='travis';\nFLUSH PRIVILEGES;\n" | mysql -u root
 install:
   - apt-cache search libzmq
   - sudo apt-get install libzmq3-dev
@@ -25,6 +26,7 @@ script:
   - cd domogik
   - git checkout 0.4-candidate
   - sudo python install.py --user $LOGNAME --command-line --domogik_log_level debug --domogik_bind_interface 127.0.0.1 --database_name domogik --database_user travis --rest_interfaces lo --rest_clean_json True --mq_ip 127.0.0.1 --hub_interfaces lo --hub_log_level info --hub_log_bandwidth True --hub_log_invalid_data True
+  - ls -l /var/lock/domogik/
   - sudo /etc/init.d/domogik start
   - cd $TRAVIS_BUILD_DIR
   - python tests/001_configure.py
