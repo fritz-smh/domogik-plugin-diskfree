@@ -1,6 +1,7 @@
 # TODO
 # - after success and similar => dashboard : http://about.travis-ci.org/fr/docs/user/status-images/
 # - notifications (irc notamment) : http://about.travis-ci.org/fr/docs/user/build-configuration/
+# - optimisation : utiliser un .sh dans le repo (plus facilement adaptable). Utiliser le shebang bash + -e : cf https://groups.google.com/forum/#!topic/travis-ci/JtC4WiCMA0w
 addons:
   hosts:
     - domogikhost
@@ -35,7 +36,7 @@ install:
   - sudo chown $LOGNAME:root /var/lock/domogik
   - sudo chown $LOGNAME:root /var/lock/domogik/config.lock
   - sudo chown $LOGNAME:root /var/log/domogik/*
-  - ls -l /var/lock/domogik/domogik/
+  - ls -l /var/lock/domogik/
   - cd $TRAVIS_BUILD_DIR
   - ls -l
   - pwd
