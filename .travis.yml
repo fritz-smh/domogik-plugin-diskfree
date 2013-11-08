@@ -39,7 +39,7 @@ script:
   - cd $TRAVIS_BUILD_DIR
   - ls -l
   - pwd
-  - ln -s $(pwd) /var/lib/domogik/plugin_diskfree
+  - ln -s $(pwd) /var/lib/domogik/domogik_packages/plugin_diskfree
   - ls -l /var/lib/domogik/plugin_diskfree
   - sudo /etc/init.d/domogik start
   - sleep 180
