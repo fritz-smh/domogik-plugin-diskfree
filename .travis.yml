@@ -1,4 +1,5 @@
 # TODO
+# - unit test : renvoyer un code retour du py != 0 si on a un échec
 # - after success and similar => dashboard : http://about.travis-ci.org/fr/docs/user/status-images/
 # - notifications (irc notamment) : http://about.travis-ci.org/fr/docs/user/build-configuration/
 # - optimisation : utiliser un .sh dans le repo (plus facilement adaptable). Utiliser le shebang bash + -e : cf https://groups.google.com/forum/#!topic/travis-ci/JtC4WiCMA0w

@@ -323,7 +323,7 @@ if __name__ == "__main__":
     suite.addTest(DiskfreeTestCase("test_0050_start_the_plugin", xpl_plugin, name, cfg))
 
     # do the specific plugin tests
-    #suite.addTest(DiskfreeTestCase("test_0100_dummy", xpl_plugin, name, cfg))
+    suite.addTest(DiskfreeTestCase("test_0100_dummy", xpl_plugin, name, cfg))
     suite.addTest(DiskfreeTestCase("test_0110_total_space", xpl_plugin, name, cfg))
     suite.addTest(DiskfreeTestCase("test_0120_free_space", xpl_plugin, name, cfg))
     suite.addTest(DiskfreeTestCase("test_0130_used_space", xpl_plugin, name, cfg))
@@ -332,8 +332,9 @@ if __name__ == "__main__":
     # do some tests comon to all the plugins
     suite.addTest(DiskfreeTestCase("test_9900_hbeat", xpl_plugin, name, cfg))
     suite.addTest(DiskfreeTestCase("test_9990_stop_the_plugin", xpl_plugin, name, cfg))
-    unittest.TextTestRunner().run(suite)
     
     # quit
+    res = unittest.TextTestRunner().run(suite)
     xpl_plugin.force_leave()
+    sys.exit(res.wasSuccessful())
     
