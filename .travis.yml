@@ -42,7 +42,7 @@ script:
   - ln -s $(pwd) /var/lib/domogik/domogik_packages/plugin_diskfree
   - ls -l /var/lib/domogik/domogik_packages/plugin_diskfree
   - sudo /etc/init.d/domogik start
-  - sleep 180
+  - sleep 10
   - cat /var/log/domogik/manager.log
   - python tests/010_tests.py
 after_failure: 
