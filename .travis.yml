@@ -23,6 +23,8 @@ install:
   - sudo apt-get install libmysqlclient-dev mysql-client
   - sudo apt-get install python-psycopg2
 before_script:
+  - "mysql -e 'create database domogik;'"
+  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('domopass') WHERE user='travis';\nFLUSH PRIVILEGES;\n" | mysql -u root
   - cd ~
   - git clone https://github.com/domogik/domogik.git
   - cd domogik
@@ -44,8 +46,6 @@ before_script:
   - sudo /etc/init.d/domogik start
   - sleep 10
   - cat /var/log/domogik/manager.log
-  - "mysql -e 'create database domogik;'"
-  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('domopass') WHERE user='travis';\nFLUSH PRIVILEGES;\n" | mysql -u root
 script:
   - python tests/010_tests.py
 after_failure: 
