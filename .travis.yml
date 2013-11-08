@@ -1,15 +1,20 @@
 # TODO
-# - unit test : renvoyer un code retour du py != 0 si on a un échec
+# - python 2.7 / 3
+# - mysql and postgres for domogik
 # - after success and similar => dashboard : http://about.travis-ci.org/fr/docs/user/status-images/
 #                                            http://about.travis-ci.org/docs/user/ci-environment/
 # - notifications (irc notamment) : http://about.travis-ci.org/fr/docs/user/build-configuration/
 #    notifications:
 #       on_success: never
 #       on_failure: always
+# DOC : ------------------------------------------------------------------------ 
+# - unit test : renvoyer un code retour du py != 0 si on a un échec
 # - optimisation : utiliser un .sh dans le repo (plus facilement adaptable). Utiliser le shebang bash + -e : cf https://groups.google.com/forum/#!topic/travis-ci/JtC4WiCMA0w
 # - comment gerer les branches ? un yaml dans master suffit ? tester sur depot dmg
+#-------------------------------------------------------------------------------
 python:
   - "2.7"
+  - "3.3"
 mysql:
   adapter: mysql2
   database: domogik
