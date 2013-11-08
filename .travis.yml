@@ -27,17 +27,8 @@ install:
   - git checkout $DMG_BRANCH
   - src/domogik/tests/travis/travis-install-dependencies.sh
 before_script:
-  - "mysql -e 'create database domogik;'"
-  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('domopass') WHERE user='travis';\nFLUSH PRIVILEGES;\n" | mysql -u root
-  - sudo mkdir -p /var/lock/domogik 
-  - sudo chown $LOGNAME:root /var/lock/domogik
-  - sudo touch /var/lock/domogik/config.lock 
-  - sudo chown $LOGNAME:root /var/lock/domogik/config.lock
-  - sudo python install.py --user $LOGNAME --command-line --domogik_log_level debug --domogik_bind_interface 127.0.0.1 --database_name domogik --database_user travis --rest_interfaces lo --rest_clean_json True --mq_ip 127.0.0.1 --hub_interfaces lo --hub_log_level info --hub_log_bandwidth True --hub_log_invalid_data True
-  - sudo chown $LOGNAME:root /var/lock/domogik
-  - sudo chown $LOGNAME:root /var/lock/domogik/config.lock
-  - sudo chown $LOGNAME:root /var/log/domogik/*
-  - ls -l /var/lock/domogik/
+  - src/domogik/tests/travis/travis-setup-database.sh
+  - src/domogik/tests/travis/travis-install-domogik.sh
   - cd $TRAVIS_BUILD_DIR
   - ls -l
   - pwd
