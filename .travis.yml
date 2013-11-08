@@ -1,6 +1,7 @@
 # TODO
 # - unit test : renvoyer un code retour du py != 0 si on a un échec
 # - after success and similar => dashboard : http://about.travis-ci.org/fr/docs/user/status-images/
+#                                            http://about.travis-ci.org/docs/user/ci-environment/
 # - notifications (irc notamment) : http://about.travis-ci.org/fr/docs/user/build-configuration/
 #    notifications:
 #       on_success: never
@@ -17,19 +18,14 @@ mysql:
   database: domogik
   username: travis
   encoding: utf8
+env:
+  DMG_BRANCH=0.4-candidate
 install:
   - cd ~
   - git clone https://github.com/domogik/domogik.git
   - cd domogik
-  - git checkout 0.4-candidate
-  - apt-cache search libzmq
-  - sudo apt-get install libzmq3-dev
-  - sudo pip install pyzmq
-  - sudo apt-get install python-argparse
-  - sudo apt-get install python2.7-dev gcc
-  - sudo apt-get install libssl-dev
-  - sudo apt-get install libmysqlclient-dev mysql-client
-  - sudo apt-get install python-psycopg2
+  - git checkout $DMG_BRANCH
+  - src/domogik/tests/travis/travis-install-dependencies.sh
 before_script:
   - "mysql -e 'create database domogik;'"
   - echo "USE mysql;\nUPDATE user SET password=PASSWORD('domopass') WHERE user='travis';\nFLUSH PRIVILEGES;\n" | mysql -u root
