@@ -8,9 +8,6 @@
 #       on_failure: always
 # - optimisation : utiliser un .sh dans le repo (plus facilement adaptable). Utiliser le shebang bash + -e : cf https://groups.google.com/forum/#!topic/travis-ci/JtC4WiCMA0w
 # - comment gerer les branches ? un yaml dans master suffit ? tester sur depot dmg
-addons:
-  hosts:
-    - domogikhost
 python:
   - "2.7"
 mysql:
@@ -20,6 +17,7 @@ mysql:
   encoding: utf8
 env:
   DMG_BRANCH=0.4-candidate
+  DMG_PLUGIN=diskfree
 install:
   - cd ~
   - git clone https://github.com/domogik/domogik.git
@@ -29,30 +27,13 @@ install:
 before_script:
   - src/domogik/tests/travis/travis-setup-database.sh
   - src/domogik/tests/travis/travis-install-domogik.sh
-  - cd $TRAVIS_BUILD_DIR
-  - ls -l
-  - pwd
-  - ln -s $(pwd) /var/lib/domogik/domogik_packages/plugin_diskfree
-  - ls -l /var/lib/domogik/domogik_packages/plugin_diskfree
-  - sudo /etc/init.d/domogik start
-  - sleep 10
-  - cat /var/log/domogik/manager.log
+  - src/domogik/tests/travis/travis-install-plugin.sh $DMG_PLUGIN
+  - src/domogik/tests/travis/travis-start-domogik.sh
 script:
+  - cd $TRAVIS_BUILD_DIR
   - python tests/010_tests.py
 after_failure: 
-  - ps -ef | grep dmg
-  - cat /etc/default/domogik
-  - cat /var/log/domogik/diskfree.log
-  - cat /var/log/domogik/db_api.log
-  - cat /var/log/domogik/dbmgr.log
-  - cat /var/log/domogik/manager.log
-  - cat /var/log/domogik/rest.log
-  - cat /var/log/domogik/xplgw.log
-  - cat /var/log/domogik/mq_broker.log
-  - cat /var/log/xplhub/bandwidth.csv
-  - cat /var/log/xplhub/client_list.txt
-  - cat /var/log/xplhub/invalid_data.csv
-  - cat /var/log/xplhub/xplhub.log
+  - src/domogik/tests/travis/travis-after-failure.sh
 notifications:
   irc: "irc.freenode.net#domogik"
 
