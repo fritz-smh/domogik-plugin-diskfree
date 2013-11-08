@@ -325,7 +325,7 @@ if __name__ == "__main__":
     # do the specific plugin tests
     #suite.addTest(DiskfreeTestCase("test_0100_dummy", xpl_plugin, name, cfg))
     suite.addTest(DiskfreeTestCase("test_0110_total_space", xpl_plugin, name, cfg))
-    #suite.addTest(DiskfreeTestCase("test_0110_total_space", xpl_plugin, name, cfg))
+    #suite.addTest(DiskfreeTestCase("test_0120_free_space", xpl_plugin, name, cfg))
     #suite.addTest(DiskfreeTestCase("test_0130_used_space", xpl_plugin, name, cfg))
     #suite.addTest(DiskfreeTestCase("test_0140_percent_used", xpl_plugin, name, cfg))
 
