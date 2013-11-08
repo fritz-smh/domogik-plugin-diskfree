@@ -330,7 +330,7 @@ if __name__ == "__main__":
     suite.addTest(DiskfreeTestCase("test_0140_percent_used", xpl_plugin, name, cfg))
 
     # do some tests comon to all the plugins
-    suite.addTest(DiskfreeTestCase("test_9900_hbeat", xpl_plugin, name, cfg))
+    #suite.addTest(DiskfreeTestCase("test_9900_hbeat", xpl_plugin, name, cfg))
     suite.addTest(DiskfreeTestCase("test_9990_stop_the_plugin", xpl_plugin, name, cfg))
     unittest.TextTestRunner().run(suite)
     
