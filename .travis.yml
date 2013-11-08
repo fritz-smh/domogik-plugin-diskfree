@@ -2,6 +2,7 @@
 # - after success and similar => dashboard : http://about.travis-ci.org/fr/docs/user/status-images/
 # - notifications (irc notamment) : http://about.travis-ci.org/fr/docs/user/build-configuration/
 # - optimisation : utiliser un .sh dans le repo (plus facilement adaptable). Utiliser le shebang bash + -e : cf https://groups.google.com/forum/#!topic/travis-ci/JtC4WiCMA0w
+# - comment gerer les branches ? un yaml dans master suffit ? tester sur depot dmg
 addons:
   hosts:
     - domogikhost
@@ -12,9 +13,6 @@ mysql:
   database: domogik
   username: travis
   encoding: utf8
-before_script:
-  - "mysql -e 'create database domogik;'"
-  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('domopass') WHERE user='travis';\nFLUSH PRIVILEGES;\n" | mysql -u root
 install:
   - apt-cache search libzmq
   - sudo apt-get install libzmq3-dev
@@ -24,6 +22,7 @@ install:
   - sudo apt-get install libssl-dev
   - sudo apt-get install libmysqlclient-dev mysql-client
   - sudo apt-get install python-psycopg2
+before_script:
   - cd ~
   - git clone https://github.com/domogik/domogik.git
   - cd domogik
@@ -45,6 +44,8 @@ install:
   - sudo /etc/init.d/domogik start
   - sleep 10
   - cat /var/log/domogik/manager.log
+  - "mysql -e 'create database domogik;'"
+  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('domopass') WHERE user='travis';\nFLUSH PRIVILEGES;\n" | mysql -u root
 script:
   - python tests/010_tests.py
 after_failure: 
