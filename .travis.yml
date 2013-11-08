@@ -60,4 +60,6 @@ after_failure:
   - cat /var/log/xplhub/client_list.txt
   - cat /var/log/xplhub/invalid_data.csv
   - cat /var/log/xplhub/xplhub.log
+notifications:
+  irc: "irc.freenode.net#domogik"
 
