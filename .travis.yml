@@ -1,5 +1,6 @@
 # TODO
-# - after success and similar => dashboard
+# - after success and similar => dashboard : http://about.travis-ci.org/fr/docs/user/status-images/
+# - notifications (irc notamment) : http://about.travis-ci.org/fr/docs/user/build-configuration/
 addons:
   hosts:
     - domogikhost
@@ -22,7 +23,6 @@ install:
   - sudo apt-get install libssl-dev
   - sudo apt-get install libmysqlclient-dev mysql-client
   - sudo apt-get install python-psycopg2
-script:
   - cd ~
   - git clone https://github.com/domogik/domogik.git
   - cd domogik
@@ -44,6 +44,7 @@ script:
   - sudo /etc/init.d/domogik start
   - sleep 10
   - cat /var/log/domogik/manager.log
+script:
   - python tests/010_tests.py
 after_failure: 
   - ps -ef | grep dmg
@@ -59,6 +60,4 @@ after_failure:
   - cat /var/log/xplhub/client_list.txt
   - cat /var/log/xplhub/invalid_data.csv
   - cat /var/log/xplhub/xplhub.log
-  - sudo cat /var/log/mysql.err
-  - sudo cat /var/log/mysql.log
 
