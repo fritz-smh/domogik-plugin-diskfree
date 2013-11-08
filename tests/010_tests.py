@@ -119,7 +119,7 @@ class DiskfreeTestCase(PluginTestCase):
 
         print(u"Check that the value of the xPL message has been inserted in database")
         sensor = TestSensor(device_id, "get_free_space")
-        self.assertTrue(sensor.get_last_value()[1] == xpl_current)
+        self.assertTrue(float(sensor.get_last_value()[1]) == xpl_current)
 
         # TODO doc : tell that the last xpl message is available in self.xpl_data
         # TODO doc : tell to use percent comparison for non fixed values
