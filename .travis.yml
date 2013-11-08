@@ -35,12 +35,12 @@ script:
   - sudo chown $LOGNAME:root /var/lock/domogik
   - sudo chown $LOGNAME:root /var/lock/domogik/config.lock
   - sudo chown $LOGNAME:root /var/log/domogik/*
-  - ls -l /var/lock/domogik/domogik_packages/
+  - ls -l /var/lock/domogik/domogik/
   - cd $TRAVIS_BUILD_DIR
   - ls -l
   - pwd
   - ln -s $(pwd) /var/lib/domogik/domogik_packages/plugin_diskfree
-  - ls -l /var/lib/domogik/plugin_diskfree
+  - ls -l /var/lib/domogik/domogik_packages/plugin_diskfree
   - sudo /etc/init.d/domogik start
   - sleep 180
   - cat /var/log/domogik/manager.log
@@ -55,7 +55,7 @@ after_failure:
   - cat /var/log/domogik/rest.log
   - cat /var/log/domogik/xplgw.log
   - cat /var/log/domogik/mq_broker.log
-  - cat /var/log//var/log/xplhub/bandwidth.csv
-  - cat /var/log//var/log/xplhub/client_list.txt
-  - cat /var/log//var/log/xplhub/invalid_data.csv
-  - cat /var/log//var/log/xplhub/xplhub.log
+  - cat /var/log/xplhub/bandwidth.csv
+  - cat /var/log/xplhub/client_list.txt
+  - cat /var/log/xplhub/invalid_data.csv
+  - cat /var/log/xplhub/xplhub.log
