@@ -23,17 +23,17 @@ install:
   - git clone https://github.com/domogik/domogik.git
   - cd domogik
   - git checkout $DMG_BRANCH
-  - src/domogik/tests/travis/travis-install-dependencies.sh
+  - ~/domogik/src/domogik/tests/travis/travis-install-dependencies.sh
 before_script:
-  - src/domogik/tests/travis/travis-setup-database.sh
-  - src/domogik/tests/travis/travis-install-domogik.sh
-  - src/domogik/tests/travis/travis-install-plugin.sh $DMG_PLUGIN
-  - src/domogik/tests/travis/travis-start-domogik.sh
+  - ~/domogik/src/domogik/tests/travis/travis-setup-database.sh
+  - ~/domogik/src/domogik/tests/travis/travis-install-domogik.sh
+  - ~/domogik/src/domogik/tests/travis/travis-install-plugin.sh $DMG_PLUGIN
+  - ~/domogik/src/domogik/tests/travis/travis-start-domogik.sh
 script:
   - cd $TRAVIS_BUILD_DIR
   - python tests/010_tests.py
 after_failure: 
-  - src/domogik/tests/travis/travis-after-failure.sh
+  - ~/domogik/src/domogik/tests/travis/travis-after-failure.sh
 notifications:
   irc: "irc.freenode.net#domogik"
 
