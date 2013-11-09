@@ -1,3 +1,7 @@
+# This file is used for automated tests with Travis CI : travis-ci.org
+# based on the template version 1
+# the templates are availables in the documentation on http://docs.domogik.org/domogik/dev/en/package_development/plugins/tests/travis_templates.html
+
 # TODO
 # - python 2.7 / 3
 # - mysql and postgres for domogik
@@ -37,6 +41,7 @@ env:
 install:
   - which python
   - ls -l $(which python)
+  - ls -l /usr/bin/python*
   - cd ~
   - git clone https://github.com/domogik/domogik.git
   - cd domogik
@@ -50,8 +55,8 @@ before_script:
 script:
   - cd $TRAVIS_BUILD_DIR
   - python tests/010_tests.py
-after_failure: 
-  - ~/domogik/src/domogik/tests/travis/travis-after-failure.sh
+after_script: 
+  - ~/domogik/src/domogik/tests/travis/travis-after.sh
 notifications:
   irc: "irc.freenode.net#domogik"
   on_success: never
