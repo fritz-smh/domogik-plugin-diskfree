@@ -26,6 +26,7 @@
 # - optimisation : utiliser un .sh dans le repo (plus facilement adaptable). Utiliser le shebang bash + -e : cf https://groups.google.com/forum/#!topic/travis-ci/JtC4WiCMA0w
 # - comment gerer les branches ? un yaml dans master suffit ? tester sur depot dmg
 #-------------------------------------------------------------------------------
+language: python
 python:
   - "2.7"
   - "3.2"
