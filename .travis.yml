@@ -35,6 +35,8 @@ env:
   DMG_BRANCH=0.4-candidate
   DMG_PLUGIN=diskfree
 install:
+  - which python
+  - ls -l $(which python)
   - cd ~
   - git clone https://github.com/domogik/domogik.git
   - cd domogik
