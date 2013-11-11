@@ -30,9 +30,9 @@
                 "conversion": "",
                 "history": {
                     "store": false,
-                    "max": 1,
-                    "expire": 1,
-                    "round_value": 1
+                    "max": 0,
+                    "expire": 0,
+                    "round_value": 0
                 }
 	},
     	"get_total_space": {
