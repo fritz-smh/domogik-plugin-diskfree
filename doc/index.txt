@@ -17,7 +17,7 @@ There is no dependency.
 Plugin configuration
 ====================
 
-There is global configuration options for this plugin.
+There is no global configuration options for this plugin.
 
 Create the devices
 ==================
