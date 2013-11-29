@@ -150,11 +150,13 @@
             "parameters": [
                 {
                     "key": "device",
+                    "xpl": true,
                     "description": "The path to look at.",
                     "type": "string"
                 },
                 {
                     "key": "interval",
+                    "xpl": false,
                     "description": "The time in minutes between each check.",
                     "type": "integer"
                 }
