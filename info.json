@@ -16,6 +16,7 @@
     	"get_free_space": {
 		"name": "Free Space",
                 "data_type": "DT_Byte",
+                "type": "absolute",
                 "conversion": "",
                 "history": {
                     "store": true,
@@ -27,6 +28,7 @@
     	"get_used_space": {
 		"name": "Used Space",
                 "data_type": "DT_Byte",
+                "type": "absolute",
                 "conversion": "",
                 "history": {
                     "store": false,
@@ -37,6 +39,7 @@
 	},
     	"get_total_space": {
 		"name": "Total Space",
+                "type": "absolute",
                 "data_type": "DT_Byte",
                 "conversion": "",
                 "history": {
@@ -48,6 +51,7 @@
 	},
     	"get_percent_used": {
 		"name": "Percent used",
+                "type": "absolute",
                 "data_type": "DT_Scaling",
                 "conversion": "",
                 "history": {
