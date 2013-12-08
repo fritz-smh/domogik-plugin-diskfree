@@ -17,7 +17,7 @@ There is no dependency.
 Plugin configuration
 ====================
 
-There is global configuration options for this plugin.
+There is no global configuration options for this plugin.
 
 Create the devices
 ==================
@@ -33,7 +33,7 @@ Key                   Type                        Description
 device                string                      The path to monitor on the filesystem. Example : */home*
 --------------------- --------------------------- ----------------------------------------------------------------------
 interval              number                      The time in minutes between each time the filesystem space is monitored
---------------------- --------------------------- ----------------------------------------------------------------------
+===================== =========================== ======================================================================
 
 Start the plugin
 ================

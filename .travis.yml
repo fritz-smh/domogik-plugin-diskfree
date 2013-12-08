@@ -35,12 +35,9 @@ mysql:
   username: travis
   encoding: utf8
 env:
-  DMG_BRANCH=0.4-candidate
+  DMG_BRANCH=master
   DMG_PLUGIN=diskfree
 install:
-  - which python
-  - ls -l $(which python)
-  - ls -l /usr/bin/python*
   - cd ~
   - git clone https://github.com/domogik/domogik.git
   - cd domogik
@@ -50,7 +47,7 @@ before_script:
   - ~/domogik/src/domogik/tests/travis/travis-setup-database.sh
   - ~/domogik/src/domogik/tests/travis/travis-install-domogik.sh
   - ~/domogik/src/domogik/tests/travis/travis-install-plugin.sh 
-  - ~/domogik/src/domogik/tests/travis/travis-start-domogik.sh
+  - sudo ~/domogik/src/domogik/tests/travis/travis-start-domogik.sh
 script:
   - echo $TRAVIS_BUILD_DIR
   - cd $TRAVIS_BUILD_DIR
@@ -61,6 +58,6 @@ notifications:
   irc: "irc.freenode.net#domogik"
   on_success: never
   on_failure: always
-  template:
-    - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
+  #template:
+  #  - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
 

@@ -31,7 +31,7 @@
                 "type": "absolute",
                 "conversion": "",
                 "history": {
-                    "store": false,
+                    "store": true,
                     "max": 0,
                     "expire": 0,
                     "round_value": 0
