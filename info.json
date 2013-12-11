@@ -16,10 +16,11 @@
     	"get_free_space": {
 		"name": "Free Space",
                 "data_type": "DT_Byte",
-                "type": "absolute",
+                "incremental" : false,
                 "conversion": "",
                 "history": {
                     "store": true,
+                    "duplicate": false,
                     "max": 0,
                     "expire": 0,
                     "round_value": 0
@@ -28,10 +29,11 @@
     	"get_used_space": {
 		"name": "Used Space",
                 "data_type": "DT_Byte",
-                "type": "absolute",
+                "incremental" : false,
                 "conversion": "",
                 "history": {
                     "store": true,
+                    "duplicate": false,
                     "max": 0,
                     "expire": 0,
                     "round_value": 0
@@ -39,11 +41,12 @@
 	},
     	"get_total_space": {
 		"name": "Total Space",
-                "type": "absolute",
                 "data_type": "DT_Byte",
+                "incremental" : false,
                 "conversion": "",
                 "history": {
                     "store": true,
+                    "duplicate": false,
                     "max": 0,
                     "expire": 0,
                     "round_value": 0
@@ -51,11 +54,12 @@
 	},
     	"get_percent_used": {
 		"name": "Percent used",
-                "type": "absolute",
                 "data_type": "DT_Scaling",
+                "incremental" : false,
                 "conversion": "",
                 "history": {
                     "store": true,
+                    "duplicate": false,
                     "max": 0,
                     "expire": 0,
                     "round_value": 0
