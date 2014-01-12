@@ -1,8 +1,8 @@
 {
-    '10_tests' : {
-        'automatic' : true,
-        'alter_configuration_or_setup' : 'true',
-        'need_hardware' : false,
-        'mock_available' : false
+    "010_tests" : {
+        "automatic" : true,
+        "alter_configuration_or_setup" : true,
+        "need_hardware" : false,
+        "mock_available" : false
     }
 }
