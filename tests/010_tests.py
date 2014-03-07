@@ -339,6 +339,7 @@ if __name__ == "__main__":
         rc = 0   # tests are ok so the shell return code is 0
     else:
         rc = 1   # tests are ok so the shell return code is != 0
-    xpl_plugin.force_leave(return_code = rc)
+    #xpl_plugin.force_leave(return_code = rc)
+    xpl_plugin.force_leave(return_code = 1)
      
     
