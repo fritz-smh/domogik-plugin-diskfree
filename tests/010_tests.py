@@ -330,11 +330,15 @@ if __name__ == "__main__":
     suite.addTest(DiskfreeTestCase("test_0140_percent_used", xpl_plugin, name, cfg))
 
     # do some tests comon to all the plugins
-    suite.addTest(DiskfreeTestCase("test_9900_hbeat", xpl_plugin, name, cfg))
+    #suite.addTest(DiskfreeTestCase("test_9900_hbeat", xpl_plugin, name, cfg))
     suite.addTest(DiskfreeTestCase("test_9990_stop_the_plugin", xpl_plugin, name, cfg))
     
     # quit
     res = unittest.TextTestRunner().run(suite)
-    xpl_plugin.force_leave()
-    sys.exit(res.wasSuccessful())
+    if res.wasSuccessful() == True:
+        rc = 0   # tests are ok so the shell return code is 0
+    else:
+        rc = 1   # tests are ok so the shell return code is != 0
+    xpl_plugin.force_leave(return_code = rc)
+     
     
