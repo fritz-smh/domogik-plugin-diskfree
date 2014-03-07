@@ -84,6 +84,7 @@ class DiskManager(XplPlugin):
                                               (path, interval,),
                                               {})
                 threads[thr_name].start()
+                self.register_thread(threads[thr_name])
 
                 # feature get_free_space
                 path = self.get_parameter_for_feature(a_device, "xpl_stats", "get_free_space", "device")
@@ -97,6 +98,7 @@ class DiskManager(XplPlugin):
                                               (path, interval,),
                                               {})
                 threads[thr_name].start()
+                self.register_thread(threads[thr_name])
 
                 # feature get_used_space
                 path = self.get_parameter_for_feature(a_device, "xpl_stats", "get_used_space", "device")
@@ -110,6 +112,7 @@ class DiskManager(XplPlugin):
                                               (path, interval,),
                                               {})
                 threads[thr_name].start()
+                self.register_thread(threads[thr_name])
 
                 # feature get_percent_used
                 path = self.get_parameter_for_feature(a_device, "xpl_stats", "get_percent_used", "device")
@@ -123,6 +126,7 @@ class DiskManager(XplPlugin):
                                               (path, interval,),
                                               {})
                 threads[thr_name].start()
+                self.register_thread(threads[thr_name])
 
             except:
                 self.log.error(traceback.format_exc())
