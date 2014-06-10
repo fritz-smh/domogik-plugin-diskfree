@@ -139,7 +139,7 @@
        	    }
        }
     },
-    "device_types": {
+    "instance_types": {
         "diskfree.disk_usage": {
             "description": "Disk usage", 
             "id": "diskfree.disk_usage", 
