@@ -7,5 +7,5 @@ Table Of Content
 .. toctree::
 
     /index
-    /chengelog
+    /changelog
     /dev
