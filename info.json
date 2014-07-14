@@ -1,8 +1,8 @@
 { 
     "configuration": [],
     "products": [],
-    "commands": [],
-    "xpl_commands": [], 
+    "commands": {},
+    "xpl_commands": {}, 
     "sensors": {
     	"get_free_space": {
 		"name": "Free Space",
