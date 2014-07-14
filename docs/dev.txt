@@ -2,7 +2,7 @@
 Development informations
 ========================
 
-How it the disk space data calcaulted ?
+How it the disk space data calculated ?
 =======================================
 
 The plugin just use the ``os.statvfs(path)`` function.
