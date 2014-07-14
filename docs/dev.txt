@@ -2,8 +2,8 @@
 Development informations
 ========================
 
-How it the disk space data found ?
-==================================
+How it the disk space data calcaulted ?
+=======================================
 
 The plugin just use the ``os.statvfs(path)`` function.
 
