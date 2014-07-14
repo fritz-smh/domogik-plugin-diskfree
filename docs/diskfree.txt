@@ -19,13 +19,13 @@ Plugin configuration
 
 There is no global configuration options for this plugin.
 
-Create the devices
-==================
+Create the domogik devices
+==========================
 
-Device type : diskfree.disk_usage
----------------------------------
+Domogik device type : diskfree.disk_usage
+-----------------------------------------
 
-2 parameters are needed for a device creation:
+2 parameters are needed for a domogik device creation:
 
 ===================== =========================== ======================================================================
 Key                   Type                        Description
@@ -38,7 +38,7 @@ interval              number                      The time in minutes between ea
 Start the plugin
 ================
 
-You can now start the plugin (start button) and use the created devices.
+You can now start the plugin (start button) and use the created domogik devices.
 
 Set up your widgets on the user interface
 =========================================
