@@ -45,5 +45,5 @@ html_theme = 'default'
 html_static_path = ['_static']
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'domogik-plugin-diskfreedoc'
+htmlhelp_basename = 'domogik-plugin-diskfree'
 
