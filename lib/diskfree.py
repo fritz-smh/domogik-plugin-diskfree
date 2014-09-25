@@ -58,7 +58,7 @@ class Disk:
         while not self._stop.isSet():
             try:
                 du = os.statvfs(path)
-                du_total = (du.f_blocks * du.f_frsize) / 1024
+                du_total = (du.f_blocks * du.f_frsize) 
                 self._callback(path, "total_space", du_total)
             except:
                 self.log.error(u"Error for getting total space on path {0} : {1}".format(path, traceback.format_exc()))
@@ -71,7 +71,7 @@ class Disk:
         while not self._stop.isSet():
             try:
                 du = os.statvfs(path)
-                du_free = (du.f_bavail * du.f_frsize) / 1024
+                du_free = (du.f_bavail * du.f_frsize) 
                 self._callback(path, "free_space", du_free)
             except:
                 self.log.error(u"Error for getting free space on path {0} : {1}".format(path, traceback.format_exc()))
@@ -84,7 +84,7 @@ class Disk:
         while not self._stop.isSet():
             try:
                 du = os.statvfs(path)
-                du_used = ((du.f_blocks - du.f_bfree) * du.f_frsize) / 1024
+                du_used = ((du.f_blocks - du.f_bfree) * du.f_frsize) 
                 self._callback(path, "used_space", du_used)
             except:
                 self.log.error(u"Error for getting used space on path {0} : {1}".format(path, traceback.format_exc()))
@@ -97,8 +97,8 @@ class Disk:
         while not self._stop.isSet():
             try:
                 du = os.statvfs(path)
-                du_total = (du.f_blocks * du.f_frsize) / 1024
-                du_used = ((du.f_blocks - du.f_bfree) * du.f_frsize) / 1024
+                du_total = (du.f_blocks * du.f_frsize) 
+                du_used = ((du.f_blocks - du.f_bfree) * du.f_frsize) 
                 # notice : % value is less than real value (df command) because of reserved blocks
                 try:
                     du_percent = (du_used * 100) / du_total
@@ -144,9 +144,9 @@ class off_Disk:
         """ Get disk usage stats for folder
         """
         du = os.statvfs(path)
-        du_free = (du.f_bavail * du.f_frsize) / 1024
-        du_total = (du.f_blocks * du.f_frsize) / 1024
-        du_used = ((du.f_blocks - du.f_bfree) * du.f_frsize) / 1024
+        du_free = (du.f_bavail * du.f_frsize) 
+        du_total = (du.f_blocks * du.f_frsize)
+        du_used = ((du.f_blocks - du.f_bfree) * du.f_frsize)
         # notice : % valie is less than real value (df command) because of reserved blocks
         try:
             du_percent = (du_used * 100) / du_total
