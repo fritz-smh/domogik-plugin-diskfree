@@ -1,14 +1,15 @@
 { 
     "configuration": [],
     "products": [],
-    "commands": [],
-    "xpl_commands": [], 
+    "commands": {},
+    "xpl_commands": {}, 
     "sensors": {
     	"get_free_space": {
 		"name": "Free Space",
                 "data_type": "DT_Byte",
                 "incremental" : false,
                 "conversion": "",
+                "timeout": 0,
                 "history": {
                     "store": true,
                     "duplicate": false,
@@ -22,6 +23,7 @@
                 "data_type": "DT_Byte",
                 "incremental" : false,
                 "conversion": "",
+                "timeout": 0,
                 "history": {
                     "store": true,
                     "duplicate": false,
@@ -35,6 +37,7 @@
                 "data_type": "DT_Byte",
                 "incremental" : false,
                 "conversion": "",
+                "timeout": 0,
                 "history": {
                     "store": true,
                     "duplicate": false,
@@ -48,6 +51,7 @@
                 "data_type": "DT_Scaling",
                 "incremental" : false,
                 "conversion": "",
+                "timeout": 0,
                 "history": {
                     "store": true,
                     "duplicate": false,
