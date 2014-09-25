@@ -12,6 +12,7 @@ import unittest
 import sys
 import os
 import traceback
+import time
 
 class DiskfreeTestCase(PluginTestCase):
 
@@ -40,7 +41,7 @@ class DiskfreeTestCase(PluginTestCase):
 
         # get the current total space on the device
         du = os.statvfs(path)
-        du_total = (du.f_blocks * du.f_frsize) / 1024
+        du_total = (du.f_blocks * du.f_frsize) 
 
         # do the test
         print(u"Check that a message about total space is sent. The message must be received each {0} minute(s)".format(interval))
@@ -105,7 +106,7 @@ class DiskfreeTestCase(PluginTestCase):
         xpl_current = float(self.xpl_data.data['current'])
         # get the current free space on the device
         du = os.statvfs(path)
-        du_free_space = float((du.f_bavail * du.f_frsize) / 1024)
+        du_free_space = float((du.f_bavail * du.f_frsize))
         diff_percent = float(abs(float(xpl_current) - du_free_space)/du_free_space)
         # as the disk free size can change, we assume that a difference which is less than 2% is a good result)
         if diff_percent > 0.02:
@@ -167,7 +168,7 @@ class DiskfreeTestCase(PluginTestCase):
         xpl_current = float(self.xpl_data.data['current'])
         # get the current used space on the device
         du = os.statvfs(path)
-        du_used = float(((du.f_blocks - du.f_bfree) * du.f_frsize) / 1024)
+        du_used = float(((du.f_blocks - du.f_bfree) * du.f_frsize))
         diff_percent = float(abs(float(xpl_current) - du_used)/du_used)
         # as the disk used size can change, we assume that a difference which is less than 2% is a good result)
         if diff_percent > 0.02:
@@ -232,8 +233,8 @@ class DiskfreeTestCase(PluginTestCase):
 
         # get the current percent used of the device
         du = os.statvfs(path)
-        du_total = (du.f_blocks * du.f_frsize) / 1024
-        du_used = ((du.f_blocks - du.f_bfree) * du.f_frsize) / 1024
+        du_total = (du.f_blocks * du.f_frsize) 
+        du_used = ((du.f_blocks - du.f_bfree) * du.f_frsize)
         # notice : % value is less than real value (df command) because of reserved blocks
         try:
             du_percent = (du_used * 100) / du_total
@@ -306,12 +307,39 @@ if __name__ == "__main__":
         sys.exit(1)
 
     # create a test device
+    #try:
+    #    device_id = td.create_device(client_id, "test_device_diskfree", "diskfree.disk_usage")
+    #    td.configure_global_parameters({"device" : path, "interval" : interval})
+    #except: 
+    #    print(u"Error while creating the test devices : {0}".format(traceback.format_exc()))
+    #    sys.exit(1)
+
+    # create a test device
     try:
-        device_id = td.create_device(client_id, "test_device_diskfree", "diskfree.disk_usage")
-        td.configure_global_parameters({"device" : path, "interval" : interval})
-    except: 
+        params = td.get_params(client_id, "diskfree.disk_usage")
+
+        # fill in the params
+        params["device_type"] = "diskfree.disk_usage"
+        params["name"] = "test_device_diskfree"
+        params["reference"] = "reference"
+        params["description"] = "description"
+        # global params
+        for the_param in params['global']:
+            if the_param['key'] == "interval":
+                the_param['value'] = interval
+        print params['global']
+        # xpl params
+        for the_param in params['xpl']:
+            if the_param['key'] == "device":
+                the_param['value'] = path
+        print params['xpl']
+        # create
+        device_id = td.create_device(params)['id']
+
+    except:
         print(u"Error while creating the test devices : {0}".format(traceback.format_exc()))
         sys.exit(1)
+
     
     ### prepare and run the test suite
     suite = unittest.TestSuite()
@@ -328,6 +356,13 @@ if __name__ == "__main__":
     suite.addTest(DiskfreeTestCase("test_0120_free_space", xpl_plugin, name, cfg))
     suite.addTest(DiskfreeTestCase("test_0130_used_space", xpl_plugin, name, cfg))
     suite.addTest(DiskfreeTestCase("test_0140_percent_used", xpl_plugin, name, cfg))
+    # wait for 2 seconds... why ? well... this is quite embarrasing to explain!
+    # on my laptop, when the "stop the plugin" test is launched, an "active" 
+    # plugin.status message is sent just before the "stopped" plugin.status 
+    # message... and so, the plugin is seen as still active and the test fails
+    # yeah, this need to be fixed in the testplugin.py file, but this will be 
+    # done later so...
+    time.sleep(2)
 
     # do some tests comon to all the plugins
     #suite.addTest(DiskfreeTestCase("test_9900_hbeat", xpl_plugin, name, cfg))
