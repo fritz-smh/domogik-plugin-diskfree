@@ -175,7 +175,7 @@
         "domogik_min_version": "0.4.0", 
         "name": "diskfree", 
         "type": "plugin", 
-        "version": "1.0a1"
+        "version": "1.0"
     }, 
     "json_version": 2
 }
