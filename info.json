@@ -8,6 +8,7 @@
 		"name": "Free Space",
                 "data_type": "DT_Byte",
                 "incremental" : false,
+                "timeout": 0,
                 "conversion": "",
                 "timeout": 0,
                 "history": {
@@ -22,6 +23,7 @@
 		"name": "Used Space",
                 "data_type": "DT_Byte",
                 "incremental" : false,
+                "timeout": 0,
                 "conversion": "",
                 "timeout": 0,
                 "history": {
@@ -36,6 +38,7 @@
 		"name": "Total Space",
                 "data_type": "DT_Byte",
                 "incremental" : false,
+                "timeout": 0,
                 "conversion": "",
                 "timeout": 0,
                 "history": {
@@ -50,6 +53,7 @@
 		"name": "Percent used",
                 "data_type": "DT_Scaling",
                 "incremental" : false,
+                "timeout": 0,
                 "conversion": "",
                 "timeout": 0,
                 "history": {

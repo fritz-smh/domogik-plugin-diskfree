@@ -8,9 +8,22 @@ from domogik.common.utils import get_sanitized_hostname
 
 if __name__ == "__main__":
 
+    client_id = "plugin-diskfree.{0}".format(get_sanitized_hostname())
     td = TestDevice()
-    td.create_device("plugin-diskfree.{0}".format(get_sanitized_hostname()), "test_device_diskfree", "diskfree.disk_usage")
-    td.configure_global_parameters({"device" : "/home", "interval" : 1})
+    params = td.get_params(client_id, "diskfree.disk_usage")
+
+    # fill in the params
+    params["device_type"] = "diskfree.disk_usage"
+    params["name"] = "TestDevice"
+    params["reference"] = "reference"
+    params["description"] = "description"
+    for idx, val in enumerate(params['no-xpl']):
+        params['no-xpl'][idx]['value'] = 60
+    for idx, val in enumerate(params['xpl']):
+        params['xpl'][idx]['value'] = '/'
+
+    # go and create
+    td.create_device(params)
 
 
 # TODO : fonction pour supprimer tous les devices avec un nom donné
