@@ -129,7 +129,7 @@ class DiskManager(XplPlugin):
                 self.register_thread(threads[thr_name])
 
             except:
-                self.log.error(traceback.format_exc())
+                self.log.error(u"{0}".format(traceback.format_exc()))
                 # we don't quit plugin if an error occured
                 # a disk can have been unmounted for a while
                 #self.force_leave()
@@ -138,7 +138,6 @@ class DiskManager(XplPlugin):
 
 
         self.ready()
-        self.log.info(u"Plugin ready :)")
 
 
     def send_xpl(self, path, du_type, du_value):

@@ -2,6 +2,11 @@
 Changelog
 =========
 
+1.1
+===
+
+* Minor updates linked to Domogik 0.4
+
 1.0
 ===
 

@@ -1,14 +1,15 @@
 { 
     "configuration": [],
     "products": [],
-    "commands": [],
-    "xpl_commands": [], 
+    "commands": {},
+    "xpl_commands": {}, 
     "sensors": {
     	"get_free_space": {
 		"name": "Free Space",
                 "data_type": "DT_Byte",
                 "incremental" : false,
                 "conversion": "",
+                "timeout": 0,
                 "history": {
                     "store": true,
                     "duplicate": false,
@@ -22,6 +23,7 @@
                 "data_type": "DT_Byte",
                 "incremental" : false,
                 "conversion": "",
+                "timeout": 0,
                 "history": {
                     "store": true,
                     "duplicate": false,
@@ -35,6 +37,7 @@
                 "data_type": "DT_Byte",
                 "incremental" : false,
                 "conversion": "",
+                "timeout": 0,
                 "history": {
                     "store": true,
                     "duplicate": false,
@@ -48,6 +51,7 @@
                 "data_type": "DT_Scaling",
                 "incremental" : false,
                 "conversion": "",
+                "timeout": 0,
                 "history": {
                     "store": true,
                     "duplicate": false,
@@ -167,11 +171,11 @@
         "author_email": "fritz.smh at gmail.com", 
         "tags": ["computer"], 
         "dependencies": [], 
-        "description": "Send over xPL disk usage", 
+        "description": "Monitor your disks usage", 
         "domogik_min_version": "0.4.0", 
         "name": "diskfree", 
         "type": "plugin", 
-        "version": "1.0a0"
+        "version": "1.1"
     }, 
     "json_version": 2
 }
