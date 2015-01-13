@@ -17,8 +17,8 @@ if __name__ == "__main__":
     params["name"] = "TestDevice"
     params["reference"] = "reference"
     params["description"] = "description"
-    for idx, val in enumerate(params['no-xpl']):
-        params['no-xpl'][idx]['value'] = 60
+    for idx, val in enumerate(params['global']):
+        params['global'][idx]['value'] = 60
     for idx, val in enumerate(params['xpl']):
         params['xpl'][idx]['value'] = '/'
 
@@ -26,4 +26,3 @@ if __name__ == "__main__":
     td.create_device(params)
 
 
-# TODO : fonction pour supprimer tous les devices avec un nom donné
