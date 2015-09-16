@@ -35,10 +35,8 @@ plugin_diskfree_adm = Blueprint(package, __name__,
 
 @plugin_diskfree_adm.route('/<client_id>')
 def index(client_id):
-    client_id = "plugin-diskfree.darkstar"
     detail = get_client_detail(client_id)
     try:
-        #return render_template('{0}.html'.format(page))
         return render_template('plugin_diskfree.html',
             clientid = client_id,
             client_detail = detail,
