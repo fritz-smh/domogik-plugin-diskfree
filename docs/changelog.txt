@@ -7,6 +7,7 @@ Changelog
 
 * Fix percent free sensor value
 * Add an advanced page
+* Fix tetss related to other fixes
 
 1.2, 1.1
 ========
