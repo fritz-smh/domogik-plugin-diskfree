@@ -329,12 +329,11 @@ if __name__ == "__main__":
         for the_param in params['global']:
             if the_param['key'] == "interval":
                 the_param['value'] = interval
-        print params['global']
         # xpl params
         for the_param in params['xpl']:
             if the_param['key'] == "device":
                 the_param['value'] = path
-        print params['xpl']
+        #print("PARAMS={0}".format(params))
         # create
         device_id = td.create_device(params)['id']
 
