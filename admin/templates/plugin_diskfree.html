@@ -1,0 +1,12 @@
+{% extends theme("base/base.html") %}
+{% import theme("base/wtf.html") as wtf %}
+
+{% block content %}
+{% include theme("client_menu.html") %}
+<div class="container">
+<h2>{% trans %}Result of the 'df -h' command{% endtrans %}</H2>
+<p>{% trans %}You only need to create devices for the mounted pathes. The <em>df -h</em> result will show you all the mounted pathes that may be monitored.{% endtrans %}</p>
+<p>{% trans %}Please notice that the plugin may not give exactly the same values! This is related to the way the size are calculated. {% endtrans %}</p>
+<pre>{{ df }}</pre>
+</div>
+{% endblock %}

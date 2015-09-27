@@ -115,7 +115,7 @@ class DiskfreeTestCase(PluginTestCase):
             ok = True
         print(u"Real free size on disk = {0}".format(du_free_space))
         print(u"Plugin indicates free size on disk = {0}".format(xpl_current))
-        print(u"The allowed difference is 2%. The difference is {0}%".format(diff_percent))
+        print(u"The allowed difference is 2%. The difference is {0}%".format(diff_percent*100))
         self.assertTrue(ok)
 
         print(u"Check that the value of the xPL message has been inserted in database")
@@ -168,7 +168,8 @@ class DiskfreeTestCase(PluginTestCase):
         xpl_current = float(self.xpl_data.data['current'])
         # get the current used space on the device
         du = os.statvfs(path)
-        du_used = float(((du.f_blocks - du.f_bfree) * du.f_frsize))
+        #du_used = float(((du.f_blocks - du.f_bfree) * du.f_frsize))
+        du_used = float(((du.f_blocks - du.f_bavail) * du.f_frsize))
         diff_percent = float(abs(float(xpl_current) - du_used)/du_used)
         # as the disk used size can change, we assume that a difference which is less than 2% is a good result)
         if diff_percent > 0.02:
@@ -177,7 +178,7 @@ class DiskfreeTestCase(PluginTestCase):
             ok = True
         print(u"Real used size on disk = {0}".format(du_used))
         print(u"Plugin indicates used size on disk = {0}".format(xpl_current))
-        print(u"The allowed difference is 2%. The difference is {0}%".format(diff_percent))
+        print(u"The allowed difference is 2%. The difference is {0}%".format(diff_percent*100))
         self.assertTrue(ok)
 
         # TODO : move after the second message received 
@@ -234,7 +235,8 @@ class DiskfreeTestCase(PluginTestCase):
         # get the current percent used of the device
         du = os.statvfs(path)
         du_total = (du.f_blocks * du.f_frsize) 
-        du_used = ((du.f_blocks - du.f_bfree) * du.f_frsize)
+        #du_used = ((du.f_blocks - du.f_bfree) * du.f_frsize)
+        du_used = ((du.f_blocks - du.f_bavail) * du.f_frsize)
         # notice : % value is less than real value (df command) because of reserved blocks
         try:
             du_percent = (du_used * 100) / du_total
@@ -249,7 +251,7 @@ class DiskfreeTestCase(PluginTestCase):
             ok = True
         print(u"Real percent used of the disk = {0}".format(du_percent))
         print(u"Plugin indicates percend used of the disk = {0}".format(xpl_current))
-        print(u"The allowed difference is 2%. The difference is {0}%".format(diff_percent))
+        print(u"The allowed difference is 2%. The difference is {0}%".format(diff_percent*100))
         self.assertTrue(ok)
 
         print(u"Check that the value of the xPL message has been inserted in database")
@@ -327,12 +329,11 @@ if __name__ == "__main__":
         for the_param in params['global']:
             if the_param['key'] == "interval":
                 the_param['value'] = interval
-        print params['global']
         # xpl params
         for the_param in params['xpl']:
             if the_param['key'] == "device":
                 the_param['value'] = path
-        print params['xpl']
+        #print("PARAMS={0}".format(params))
         # create
         device_id = td.create_device(params)['id']
 

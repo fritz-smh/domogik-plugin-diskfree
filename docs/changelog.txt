@@ -2,6 +2,13 @@
 Changelog
 =========
 
+1.3
+===
+
+* Fix percent free sensor value
+* Add an advanced page
+* Fix tests related to other fixes
+
 1.2, 1.1
 ========
 
