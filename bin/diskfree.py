@@ -71,13 +71,11 @@ class DiskManager(XplPlugin):
 
                 # feature get_total_space
                 path = self.get_parameter_for_feature(a_device, "xpl_stats", "get_total_space", "device")
-                # TODO : delete the below line
-                #interval = self.get_parameter_for_feature(a_device, "xpl_stats", "get_total_space", "interval")
                 if path == None or interval == None:
                     self.log.error(u"Invalid values for device '{0}' : path = '{1}' / interval = '{2}'. Nothing will be done for this device!".format(a_device['name'], path, interval))
                     break
-                self.log.info(u"Start monitoring totel space for '%s'" % path)
-                thr_name = "{0}-{1}".format(a_device['name'], "get_total_space")
+                self.log.info(u"Start monitoring total space for '%s'" % path)
+                thr_name = "dev_{0}-{1}".format(a_device['id'], "get_total_space")
                 threads[thr_name] = threading.Thread(None,
                                                disk_manager.get_total_space,
                                               thr_name,
@@ -88,10 +86,8 @@ class DiskManager(XplPlugin):
 
                 # feature get_free_space
                 path = self.get_parameter_for_feature(a_device, "xpl_stats", "get_free_space", "device")
-                # TODO : delete the below line
-                #interval = self.get_parameter_for_feature(a_device, "xpl_stats", "get_free_space", "interval")
                 self.log.info(u"Start monitoring free space for '%s'" % path)
-                thr_name = "{0}-{1}".format(a_device['name'], "get_free_space")
+                thr_name = "dev_{0}-{1}".format(a_device['id'], "get_free_space")
                 threads[thr_name] = threading.Thread(None,
                                                disk_manager.get_free_space,
                                               thr_name,
@@ -102,10 +98,8 @@ class DiskManager(XplPlugin):
 
                 # feature get_used_space
                 path = self.get_parameter_for_feature(a_device, "xpl_stats", "get_used_space", "device")
-                # TODO : delete the below line
-                #interval = self.get_parameter_for_feature(a_device, "xpl_stats", "get_used_space", "interval")
                 self.log.info(u"Start monitoring used space for '%s'" % path)
-                thr_name = "{0}-{1}".format(a_device['name'], "get_used_space")
+                thr_name = "dev_{0}-{1}".format(a_device['id'], "get_used_space")
                 threads[thr_name] = threading.Thread(None,
                                                disk_manager.get_used_space,
                                               thr_name,
@@ -116,10 +110,8 @@ class DiskManager(XplPlugin):
 
                 # feature get_percent_used
                 path = self.get_parameter_for_feature(a_device, "xpl_stats", "get_percent_used", "device")
-                # TODO : delete the below line
-                #interval = self.get_parameter_for_feature(a_device, "xpl_stats", "get_percent_used", "interval")
                 self.log.info(u"Start monitoring percent used for '%s'" % path)
-                thr_name = "{0}-{1}".format(a_device['name'], "get_percent_used")
+                thr_name = "dev_{0}-{1}".format(a_device['id'], "get_percent_used")
                 threads[thr_name] = threading.Thread(None,
                                                disk_manager.get_percent_used,
                                               thr_name,
