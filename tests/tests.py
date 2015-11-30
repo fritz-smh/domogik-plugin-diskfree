@@ -322,7 +322,7 @@ if __name__ == "__main__":
 
         # fill in the params
         params["device_type"] = "diskfree.disk_usage"
-        params["name"] = "test_device_diskfree"
+        params["name"] = "test_device_diskfree_é"
         params["reference"] = "reference"
         params["description"] = "description"
         # global params

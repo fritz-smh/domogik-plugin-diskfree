@@ -2,6 +2,11 @@
 Changelog
 =========
 
+1.4
+===
+
+* Fix utf-8 issue
+
 1.3
 ===
 
